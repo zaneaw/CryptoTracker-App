@@ -1,5 +1,5 @@
 {
-  "name": "CryptoTracker",
+  "name": "crypto-tracker",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,8 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "chart.js": "^3.9.1",
     "react": "18.1.0",
-    "react-native": "0.70.1"
+    "react-native": "0.70.1",
+    "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
