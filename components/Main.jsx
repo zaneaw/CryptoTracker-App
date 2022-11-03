@@ -11,8 +11,19 @@ export default function Main() {
 
     return (
         <View style={styles.container}>
-            <Header />
-            <View style={[styles.body, {backgroundColor: colors.secondary}]}>
+            {isNavOpen && (
+                <Animated.View
+                    style={[
+                        styles.sideNav,
+                        animatedTranslate,
+                        {
+                            backgroundColor: colors.secondary,
+                            borderColor: colors.primary,
+                        },
+                    ]}>
+                    <SideNav clickNav={clickNav} />
+                </Animated.View>
+            )}
                 <Body />
             </View>
             <Toggle />
