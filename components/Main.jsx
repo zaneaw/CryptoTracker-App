@@ -34,6 +34,7 @@ export default function Main() {
                     <SideNav clickNav={clickNav} />
                 </Animated.View>
             )}
+            <View style={[styles.body, { backgroundColor: colors.secondary }]}>
                 <Body />
             </View>
         </View>
