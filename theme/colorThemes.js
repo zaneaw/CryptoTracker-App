@@ -3,7 +3,8 @@ export const lightColors = {
     secondary: '#BFC0C0', // SILVER
     background: '#FFFFFF', // WHITE
     header: '#EE8354', // ORANGE, header text
-    text: '#4b1b07', // SPACE CADET, DARK GRAY
+    text: '#FFFFFF', // WHITE
+    flipText: '#000000', // BLACK
     error: '#EF4444', // RED
 };
 
@@ -12,6 +13,7 @@ export const darkColors = {
     secondary: '#BFC0C0', // SILVER
     background: '#4F5D75', // BLACK CORAL
     header: '#FADDD1', // ORANGE, header text 
-    text: '#FFFFFF', // WHITE
+    text: '#000000', // BLACK
+    flipText: '#FFFFFF', // WHITE
     error: '#EF4444', // RED
 };
