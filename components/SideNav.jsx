@@ -3,6 +3,8 @@ import React from 'react';
 import { useTheme } from '../theme/ThemeProvider';
 import Icon from 'react-native-vector-icons/Feather';
 
+import Toggle from './Toggle';
+
 export default function SideNav({ clickNav }) {
     const { colors } = useTheme();
     
