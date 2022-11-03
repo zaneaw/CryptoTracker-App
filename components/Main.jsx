@@ -2,7 +2,6 @@ import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import { useTheme } from '../theme/ThemeProvider';
 
-import Toggle from './Toggle';
 import Header from './Header';
 import Body from './Body';
 
