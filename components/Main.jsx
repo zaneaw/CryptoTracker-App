@@ -26,7 +26,6 @@ export default function Main() {
             )}
                 <Body />
             </View>
-            <Toggle />
         </View>
     );
 }
