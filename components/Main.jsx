@@ -7,9 +7,20 @@ import Body from './Body';
 
 export default function Main() {
     const { colors } = useTheme();
+    const [isNavOpen, setIsNavOpen] = useState(false);
+    const clickNav = () => {
+        if (isNavOpen) {
+            translateVal.value = -325;
+            setTimeout(() => setIsNavOpen(!isNavOpen), 300);
+        } else {
+            translateVal.value = 0;
+            setIsNavOpen(!isNavOpen);
+        }  
+    };
 
     return (
         <View style={styles.container}>
+            <Header clickNav={clickNav} />
             {isNavOpen && (
                 <Animated.View
                     style={[
