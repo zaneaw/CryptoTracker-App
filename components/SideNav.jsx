@@ -13,7 +13,7 @@ export default function SideNav({ clickNav }) {
         <View style={[styles.container, {backgroundColor: colors.background}]}>
 
             <View style={[styles.header, {backgroundColor: colors.primary}]}>
-                <Text style={[{color: colors.text}]}>SideNav</Text>
+                <Text style={[styles.headerText, {color: colors.header}]}>SideNav</Text>
             </View>
             
             <View style={[styles.navItemContainer]}>
@@ -54,6 +54,9 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         position: 'absolute',
         bottom: 60,
+    },
+    headerText: {
+        fontSize: 24,
     },
     header: {
         width: '100%',
