@@ -26,10 +26,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         alignSelf: 'stretch',
+        position: 'relative',
     },
     body: {
         flex: 1,
         alignItems: 'center',
         alignSelf: 'stretch',
+    },
+    sideNav: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 1,
+        width: '75%',
+        height: '100%',
+        borderRightWidth: 2,
     },
 });
