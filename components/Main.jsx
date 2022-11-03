@@ -8,6 +8,17 @@ import Body from './Body';
 export default function Main() {
     const { colors } = useTheme();
     const [isNavOpen, setIsNavOpen] = useState(false);
+    const translateVal = useSharedValue(-325);
+
+    const animatedTranslate = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateX: withTiming(translateVal.value, {
+                duration: 300,
+                easing: Easing.in
+            }) }],
+        };
+    });
+
     const clickNav = () => {
         if (isNavOpen) {
             translateVal.value = -325;
