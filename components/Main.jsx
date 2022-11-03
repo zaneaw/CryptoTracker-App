@@ -1,6 +1,8 @@
 import { View, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import Animated, { useSharedValue, useAnimatedStyle, Easing, withTiming } from 'react-native-reanimated';
 import { useTheme } from '../theme/ThemeProvider';
+import SideNav from './SideNav';
 
 import Header from './Header';
 import Body from './Body';
