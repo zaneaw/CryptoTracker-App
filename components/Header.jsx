@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 import Icon from 'react-native-vector-icons/Feather';
 
-export default function Hero() {
+export default function Hero({ clickNav }) {
     const { colors } = useTheme();
 
     return (
