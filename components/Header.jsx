@@ -9,6 +9,9 @@ export default function Hero({ clickNav }) {
     return (
         // <View style={[styles.container, {backgroundColor: colors.primary}]}>
         <View style={styles.container}>
+            <TouchableOpacity onPress={() => clickNav()}>
+                <Icon name="menu" size ={30} color={colors.header} />
+            </TouchableOpacity>
             <Text style={[styles.title, {color: colors.header}]}>Cracker</Text>
             <TouchableOpacity onPress={() => console.log('pressed')}>
                 <Icon name="user" size={30} color={colors.header} />
