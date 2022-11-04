@@ -15,7 +15,7 @@ export default function Main() {
     const animatedTranslate = useAnimatedStyle(() => {
         return {
             transform: [{ translateX: withTiming(translateVal.value, {
-                duration: 300,
+                duration: 250,
                 easing: Easing.in
             }) }],
         };
@@ -24,7 +24,7 @@ export default function Main() {
     const clickNav = () => {
         if (isNavOpen) {
             translateVal.value = -325;
-            setTimeout(() => setIsNavOpen(!isNavOpen), 300);
+            setTimeout(() => setIsNavOpen(!isNavOpen), 250);
         } else {
             translateVal.value = 0;
             setIsNavOpen(!isNavOpen);
