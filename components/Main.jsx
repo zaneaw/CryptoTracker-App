@@ -75,5 +75,6 @@ const styles = StyleSheet.create({
         width: '75%',
         height: '100%',
         borderRightWidth: 2,
+        borderLeftWidth: 2,
     },
 });
