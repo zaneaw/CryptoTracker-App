@@ -13,6 +13,9 @@ export default function SideNav({ clickNav }) {
         <View style={[styles.container, {backgroundColor: colors.background}]}>
 
             <View style={[styles.header, {backgroundColor: colors.primary}]}>
+                <TouchableOpacity onPress={() => clickNav()} style={[styles.closeButtonTop, {borderColor: colors.header}]}>
+                    <Icon name="x" size ={30} color={colors.header} />
+                </TouchableOpacity>
                 <Text style={[styles.headerText, {color: colors.header}]}>SideNav</Text>
             </View>
             
@@ -57,6 +60,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 24,
+        position: 'relative',
     },
     header: {
         width: '100%',
@@ -70,9 +74,13 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 6,
+        paddingVertical: 2,
         position: 'absolute',
         bottom: 0,
+    },
+    closeButtonTop: {
+        position: 'absolute',
+        left: 10,
     },
     closeButtonBottom: {
         justifyContent: 'center',
