@@ -26,7 +26,7 @@ export default function SideNav({ clickNav }) {
             </View>
 
             <View style={[styles.footer, {backgroundColor: colors.primary}]}>
-                <TouchableOpacity onPress={() => clickNav()} style={[styles.closeButton, {borderColor: colors.header}]}>
+                <TouchableOpacity onPress={() => clickNav()} style={[styles.closeButtonBottom, {borderColor: colors.header}]}>
                     <Icon name="x" size ={30} color={colors.header} />
                 </TouchableOpacity>
             </View>
@@ -74,11 +74,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
     },
-    closeButton: {
+    closeButtonBottom: {
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 2,
-        borderRadius: 100,
+        //borderWidth: 2,
+        borderRadius: 5,
+        width: '100%',
         padding: 4,
     },
 })
