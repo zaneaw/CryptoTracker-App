@@ -7,7 +7,7 @@ import SideNav from './SideNav';
 import Header from './Header';
 import Body from './Body';
 
-export default function Main() {
+function Main() {
     const { colors } = useTheme();
     const [isNavOpen, setIsNavOpen] = useState(false);
     const translateVal = useSharedValue(-325);
@@ -78,3 +78,5 @@ const styles = StyleSheet.create({
         borderLeftWidth: 2,
     },
 });
+
+export default Main;
