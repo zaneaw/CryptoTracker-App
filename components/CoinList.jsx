@@ -18,19 +18,14 @@ function CoinList() {
 
     // console.log('coins: ', coins)
 
-    const getCoins = async () => {
-        console.log('in getCoins!')
+    const getCoins = () => {
+        // console.log('in getCoins!')
         // 'https://reactnative.dev/movies.json'
         // 
-        try {
-            const response = await fetch('http://localhost:5443/api');
-            const json = await response.json();
-            console.log('jsonMovies: ', json.movies)
-            } catch (error) {
-            console.error(error);
-            }
-
-        console.log('Leaving getCoins!')
+        fetch('https://zanes-crypto-tracker-server.cyclic.app/api')
+            .then((res) => res.json())
+            .then((json) => setCoins(json))
+            .catch((err) => console.error(err));
     }
     
     return (

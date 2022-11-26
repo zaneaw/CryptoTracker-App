@@ -3,17 +3,13 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 
 const largeNumFormatter = marketCap => {
-    if (marketCap >= 1000000000000) {
-        // trillion
+    if (marketCap >= 1000000000000) { // trillion
         marketCap = (marketCap / 1000000000000).toFixed(2) + ' T';
-    } else if (marketCap >= 1000000000) {
-        // billion
+    } else if (marketCap >= 1000000000) { // billion
         marketCap = (marketCap / 1000000000).toFixed(2) + ' B';
-    } else if (marketCap >= 1000000) {
-        // million
+    } else if (marketCap >= 1000000) { // million
         marketCap = (marketCap / 1000000).toFixed(2) + ' M';
-    } else if (marketCap >= 1000) {
-        // thousands
+    } else if (marketCap >= 1000) { // thousands
         marketCap = (marketCap / 1000).toFixed(2) + ' K';
     } else {
         marketCap = marketCap;
@@ -21,6 +17,12 @@ const largeNumFormatter = marketCap => {
 
     return marketCap;
 };
+
+const smallNumFormatter = (currPrice) => {
+
+
+    return currPrice;
+}
 
 // onPress = open specific coin in single coin view
 function CoinListItem({ item, index }) {
