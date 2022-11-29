@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 
-const largeNumFormatter = marketCap => {
+const largeNumFormatter = (marketCap) => {
     if (marketCap >= 1000000000000) { // trillion
         marketCap = (marketCap / 1000000000000).toFixed(2) + ' T';
     } else if (marketCap >= 1000000000) { // billion
@@ -18,16 +18,11 @@ const largeNumFormatter = marketCap => {
     return marketCap;
 };
 
-const smallNumFormatter = (currPrice) => {
-
-
-    return currPrice;
-}
-
 // onPress = open specific coin in single coin view
 function CoinListItem({ item, index }) {
-    let marketCap = largeNumFormatter(item.market_cap);
     let coinImage = item.image.replace('large', 'small');
+    let marketCap = item.market_cap;
+    let currPrice = item.current_price;
 
     let priceChange = item.price_change_percentage_24h;
     let priceChangeNeg = false;
@@ -36,6 +31,14 @@ function CoinListItem({ item, index }) {
         priceChangeNeg = true;
         priceChange = Math.abs(priceChange);
     }
+
+    if (marketCap > .01) {
+        marketCap = largeNumFormatter(marketCap);
+    };
+
+    if (currPrice > 0.01) {
+        currPrice = currPrice.toFixed(2).toLocaleString();
+    };
 
     return (
         <TouchableOpacity style={styles.listItem}>
@@ -48,7 +51,7 @@ function CoinListItem({ item, index }) {
                 <Text style={{}}>{item.symbol.toUpperCase()}</Text>
                 <Text>{marketCap}</Text>
             </View>
-            <Text>${item.current_price.toFixed(2).toLocaleString()}</Text>
+            <Text>${currPrice}</Text>
             {/* arrow down if -, arrow up if + */}
             <View
                 style={[
