@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 
 export default Screen = props => {
@@ -20,9 +20,9 @@ export default Screen = props => {
     return (
         <>
             <StatusBar animated backgroundColor={colors.background} barStyle={isDark ? 'light-content' : 'dark-content'} />
-            <View style={containerStyle}>
+            <SafeAreaView style={containerStyle}>
                 {children}
-            </View>
+            </SafeAreaView>
         </>
     );
 };
