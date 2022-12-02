@@ -1,10 +1,8 @@
 # App Goals #
 
 ### **_TODOs:_**
-* Navigation (Navbar)
-  * hamburger menu
-  * Move Toggle component to Navbar!
-* Hero design
+* handler for 0% price change!!!!
+
 
 ### **_Create UI/UX for:_**
 * Landing page/Home page
