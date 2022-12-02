@@ -2,6 +2,7 @@ export const lightColors = {
     primary: '#2D3142', // SPACE CADET, DARK GRAY
     secondary: '#BFC0C0', // SILVER
     background: '#FFFFFF', // WHITE
+    backgroundDark: '#CCC',
     header: '#EE8354', // ORANGE, header text
     text: '#FFFFFF', // WHITE
     flipText: '#000000', // BLACK
@@ -12,6 +13,7 @@ export const darkColors = {
     primary: '#2D3142', // SPACE CADET, DARK GRAY
     secondary: '#BFC0C0', // SILVER
     background: '#4F5D75', // BLACK CORAL
+    backgroundDark: '#3A4557',
     header: '#FADDD1', // ORANGE, header text 
     text: '#000000', // BLACK
     flipText: '#FFFFFF', // WHITE
