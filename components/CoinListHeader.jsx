@@ -1,33 +1,92 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useTheme } from '../theme/ThemeProvider';
+import Icon from 'react-native-vector-icons/Feather';
 
-export default function CoinListHeader() {
+export default function CoinListHeader({
+    sortBy,
+    sortByNumReverse,
+    sortByMarketCapReverse,
+    sortByPriceReverse,
+    sortByChangeReverse,
+    reverseNumClick,
+    reverseMarketCapClick,
+    reversePriceClick,
+    reverseChangeClick,
+}) {
     const { colors } = useTheme();
 
     return (
         <View
             style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={styles.number}>
+            <TouchableOpacity style={styles.number} onPress={reverseNumClick}>
                 <Text style={[styles.headerText, { color: colors.flipText }]}>
                     #
                 </Text>
-            </View>
-            <View style={styles.coin}>
+                {sortBy === 'num' ? (
+                    <Icon
+                        name={sortByNumReverse ? 'chevron-up' : 'chevron-down'}
+                        size={15}
+                    />
+                ) : (
+                    ''
+                )}
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.marketCap}
+                onPress={reverseMarketCapClick}>
                 <Text style={[styles.headerText, { color: colors.flipText }]}>
                     Market Cap
                 </Text>
-            </View>
-            <View style={styles.price}>
+                {sortBy === 'marketCap' ? (
+                    <Icon
+                        name={
+                            sortByMarketCapReverse
+                                ? 'chevron-up'
+                                : 'chevron-down'
+                        }
+                        size={15}
+                    />
+                ) : (
+                    ''
+                )}
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.price} onPress={reversePriceClick}>
                 <Text style={[styles.headerText, { color: colors.flipText }]}>
                     Price
                 </Text>
-            </View>
-            <View style={styles.change}>
+                {sortBy === 'price' ? (
+                    <Icon
+                        style={styles.priceIcon}
+                        name={
+                            sortByPriceReverse
+                                ? 'chevron-up'
+                                : 'chevron-down'
+                        }
+                        size={15}
+                    />
+                ) : (
+                    ''
+                )}
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.change} onPress={reverseChangeClick}>
                 <Text style={[styles.headerText, { color: colors.flipText }]}>
-                    24h Change
+                    Change
                 </Text>
-            </View>
+                {sortBy === 'change' ? (
+                    <Icon
+                        style={styles.changeIcon}
+                        name={
+                            sortByChangeReverse
+                                ? 'chevron-up'
+                                : 'chevron-down'
+                        }
+                        size={15}
+                    />
+                ) : (
+                    ''
+                )}
+            </TouchableOpacity>
         </View>
     );
 }
@@ -39,22 +98,33 @@ const styles = StyleSheet.create({
     number: {
         width: 44,
         minWidth: 44,
+        flexDirection: 'row',
     },
-    coin: {
+    marketCap: {
         flex: 2,
         minWidth: 92,
         marginHorizontal: '1%',
+        flexDirection: 'row',
     },
     price: {
         flex: 3,
         minWidth: 108,
         marginHorizontal: '3%',
+        paddingLeft: 14,
         alignItems: 'center',
+    },
+    priceIcon: {
+        position: 'absolute',
+        right: 16,
     },
     change: {
         width: 88,
         minWidth: 88,
-        alignItems: 'flex-end',
+        alignItems: 'center',
+    },
+    changeIcon: {
+        position: 'absolute',
+        right: 3,
     },
     headerText: {
         fontSize: 14,

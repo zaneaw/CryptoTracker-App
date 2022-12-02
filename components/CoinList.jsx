@@ -1,5 +1,5 @@
 import { View, FlatList, ActivityIndicator, Text } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTheme } from '../theme/ThemeProvider';
 import CoinListItem from './CoinListItem';
 import CoinListHeader from './CoinListHeader';
@@ -9,14 +9,104 @@ function CoinList() {
     const { colors } = useTheme();
     const [coins, setCoins] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [sortBy, setSortBy] = useState('num');
+    const [sortByNumReverse, setSortByNumReverse] = useState(false);
+    const [sortByMarketCapReverse, setSortByMarketCapReverse] = useState(false);
+    const [sortByPriceReverse, setSortByPriceReverse] = useState(false);
+    const [sortByChangeReverse, setSortByChangeReverse] = useState(false);
 
     useEffect(() => {
         getCoins();
         setIsLoading(false);
     }, []);
 
+    const numChecker = (num) => {
+        if (String(num).includes('e')) {
+            num = String(num).split('e')[0];
+            num = Number(num);
+        }
+
+        return num;
+    }
+
+    const newSortClick = (curr) => {
+        if (curr === 'num') {
+            setSortByNumReverse(sortByMarketCapReverse);
+        } else {
+            setSortByNumReverse(false);
+        };
+        if (curr === 'marketCap') {
+            setSortByMarketCapReverse(sortByNumReverse);
+        } else {
+            setSortByMarketCapReverse(false);
+        };
+        
+        setSortByPriceReverse(false);
+        setSortByChangeReverse(false);
+    }
+
+    const reverseNumClick = () => {
+        if (sortBy !== 'num') {
+            newSortClick('num');
+            return setSortBy('num');
+        };
+        setSortByNumReverse(sortByNumReverse => !sortByNumReverse);
+        setCoins(coins => coins.reverse());
+    };
+
+    const reverseMarketCapClick = () => {
+        if (sortBy !== 'marketCap') {
+            newSortClick('marketCap');
+            return setSortBy('marketCap');
+        };
+        setSortByMarketCapReverse(sortByMarketCapReverse => !sortByMarketCapReverse);
+        setCoins(coins => coins.reverse());
+    }
+
+    const reversePriceClick = () => {
+        if (sortBy !== 'price') {
+            newSortClick();
+            setSortBy('price');
+            setCoins(coins => coins.sort((a, b) => {
+                let aPrice = numChecker(a.current_price);
+                let bPrice = numChecker(b.current_price);
+                return bPrice - aPrice;
+            }));
+            return // sort coins by price, decreasing
+        };
+        setSortByPriceReverse(sortByPriceReverse => !sortByPriceReverse);
+        setCoins(coins.sort((a, b) => {
+            let aPrice = numChecker(a.current_price);
+            let bPrice = numChecker(b.current_price);
+            return aPrice - bPrice;
+        }));
+        // sort by coins expensive to cheap, then cheap to expensive
+        // setCoins()
+    }
+
+    const reverseChangeClick = () => {
+        if (sortBy !== 'change') {
+            newSortClick();
+            setSortBy('change');
+            setCoins(coins => coins.sort((a, b) => {
+                let aChange = numChecker(a.price_change_percentage_24h);
+                let bChange = numChecker(b.price_change_percentage_24h);
+                return bChange - aChange;
+            }))
+            return // sort coins by change, decreasing
+        };
+        setSortByChangeReverse(sortByChangeReverse => !sortByChangeReverse);
+        setCoins(coins => coins.sort((a, b) => {
+            let aChange = numChecker(a.price_change_percentage_24h);
+            let bChange = numChecker(b.price_change_percentage_24h);
+            return aChange - bChange;
+        }))
+        // sort by change largest to smallest, then smallest to largest
+        // setCoins()
+    }
+
     const renderItem = ({ item, index }) => (
-        <CoinListItem key={item.id} item={item} index={index} />
+        <CoinListItem key={item.id} item={item} />
     );
 
     const getCoins = () => {
@@ -54,9 +144,9 @@ function CoinList() {
         // }])
         setTimeout(() => {
             setCoins(coinData);
-        }, 500)
+        }, 50);
     };
-    
+
     return (
         <View>
             {isLoading ? (
@@ -66,7 +156,19 @@ function CoinList() {
                     data={coins}
                     renderItem={renderItem}
                     keyExtractor={coin => coin.id}
-                    ListHeaderComponent={CoinListHeader}
+                    ListHeaderComponent={
+                        <CoinListHeader
+                            sortBy={sortBy}
+                            sortByNumReverse={sortByNumReverse}
+                            sortByMarketCapReverse={sortByMarketCapReverse}
+                            sortByPriceReverse={sortByPriceReverse}
+                            sortByChangeReverse={sortByChangeReverse}
+                            reverseNumClick={reverseNumClick}
+                            reverseMarketCapClick={reverseMarketCapClick}
+                            reversePriceClick={reversePriceClick}
+                            reverseChangeClick={reverseChangeClick}
+                        />
+                    }
                     ListEmptyComponent={() => {
                         return (
                             <ActivityIndicator
@@ -80,6 +182,6 @@ function CoinList() {
             )}
         </View>
     );
-};
+}
 
 export default CoinList;
