@@ -59,7 +59,7 @@ function CoinListItem({ item, index }) {
     return (
         <TouchableOpacity style={styles.listItem}>
             <Text style={[styles.coinNum, styles.textSize, { color: colors.flipText }]}>
-                {index + 1}
+                {item.market_cap_rank}
             </Text>
             <View style={styles.imageNameCapContainer}>
                 <Image
