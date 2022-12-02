@@ -2,6 +2,7 @@
 
 ### **_TODOs:_**
 * handler for 0% price change!!!!
+* on Number or MarketCap sort, reset coins to sort by marketCapRank
 
 
 ### **_Create UI/UX for:_**
