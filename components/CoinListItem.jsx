@@ -1,6 +1,7 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
+import { useTheme } from '../theme/ThemeProvider';
 
 const largeNumFormatter = (marketCap) => {
     if (marketCap >= 1000000000000) { // trillion
@@ -20,6 +21,8 @@ const largeNumFormatter = (marketCap) => {
 
 // onPress = open specific coin in single coin view
 function CoinListItem({ item, index }) {
+    const { colors } = useTheme();
+
     let coinImage = item.image.replace('large', 'small');
     let marketCap = item.market_cap;
     let currPrice = item.current_price;
@@ -30,57 +33,134 @@ function CoinListItem({ item, index }) {
     if (priceChange < 0) {
         priceChangeNeg = true;
         priceChange = Math.abs(priceChange);
-    }
+    };
 
     if (marketCap > .01) {
         marketCap = largeNumFormatter(marketCap);
     };
 
+    if (String(currPrice).includes('e')) {
+        currPrice = String(currPrice).split('e')[0];
+        currPrice = Number(currPrice);
+    }
+
     if (currPrice > 0.01) {
-        currPrice = currPrice.toFixed(2).toLocaleString();
+        currPrice = Number(currPrice).toLocaleString(
+            undefined,
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }
+        );
+    } else {
+        currPrice = Number(currPrice).toFixed(8);
     };
 
     return (
         <TouchableOpacity style={styles.listItem}>
-            <Text>{index + 1}</Text>
-            <Image
-                style={{ width: 25, height: 25 }}
-                source={{ uri: coinImage }}
-            />
-            <View style={styles.nameCapContainer}>
-                <Text style={{}}>{item.symbol.toUpperCase()}</Text>
-                <Text>{marketCap}</Text>
+            <Text style={[styles.coinNum, styles.textSize, { color: colors.flipText }]}>
+                {index + 1}
+            </Text>
+            <View style={styles.imageNameCapContainer}>
+                <Image
+                    style={[styles.coinImage, { width: 25, height: 25 }]}
+                    source={{ uri: coinImage }}
+                />
+                <View style={styles.nameCapContainer}>
+                    <Text
+                        style={[styles.coinSymbol, styles.textSize, { color: colors.flipText }]}>
+                        {item.symbol.toUpperCase()}
+                    </Text>
+                    <Text
+                        style={[styles.marketCap, { color: colors.flipText }]}>
+                        {marketCap}
+                    </Text>
+                </View>
             </View>
-            <Text>${currPrice}</Text>
-            {/* arrow down if -, arrow up if + */}
-            <View
-                style={[
-                    styles.changeContainer,
+            <View style={styles.currPriceContainer}>
+                <Text style={[styles.currPrice, styles.textSize, { color: colors.flipText }]}>
+                    ${currPrice}
+                </Text>
+            </View>
+            <View style={styles.changeContainer}>
+                <View style={[
+                    styles.changeSmallContainer,
                     {
-                        backgroundColor: `${priceChangeNeg ? 'red' : 'green'}`,
+                        backgroundColor: `${
+                            priceChangeNeg ? '#FFCCCB' : '#90EE90'
+                        }`,
                     },
                 ]}>
-                <Icon
-                    name={priceChangeNeg ? 'chevron-down' : 'chevron-up'}
-                    size={15}
-                />
-                <Text>{priceChange.toFixed(2)}%</Text>
+                    <Icon
+                        style={{
+                            color: `${priceChangeNeg ? '#8B0000' : '#013220'}`,
+                        }}
+                        name={priceChangeNeg ? 'chevron-down' : 'chevron-up'}
+                        size={15}
+                    />
+                    <Text
+                        style={[styles.textSize, {
+                            color: `${priceChangeNeg ? '#8B0000' : '#013220'}`,
+                        }]}>
+                        {priceChange.toFixed(2)}%
+                    </Text>
+                </View>
             </View>
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-    },
     listItem: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginVertical: 12,
+    },
+    coinNum: {
+        width: 44,
+        minWidth: 44,
+    },
+    imageNameCapContainer: {
+        flex: 2,
+        minWidth: 92,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginHorizontal: '1%',
+    },
+    currPriceContainer: {
+        flex: 3,
+        minWidth: 108,
+        marginHorizontal: '3%',
     },
     changeContainer: {
+        width: 88,
+        minWidth: 88,
+    },
+    changeSmallContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        alignSelf: 'flex-end',
+        paddingVertical: 6,
+        paddingHorizontal: 4,
+        borderRadius: 4,
+    },
+    coinImage: {
+        marginRight: 4,
+    },
+    coinSymbol: {
+        fontWeight: '600'
+    },
+    marketCap: {
+        fontWeight: '300',
+        //color: '#ccc',
+    },
+    currPrice: {
+        alignSelf: 'flex-end',
+        fontWeight: '500',
+    },
+    textSize: {
+        fontSize: 16
     },
 });
 
