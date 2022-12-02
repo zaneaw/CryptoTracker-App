@@ -52,40 +52,44 @@ export default function CoinListHeader({
                 )}
             </TouchableOpacity>
             <TouchableOpacity style={styles.price} onPress={reversePriceClick}>
-                <Text style={[styles.headerText, { color: colors.flipText }]}>
-                    Price
-                </Text>
-                {sortBy === 'price' ? (
-                    <Icon
-                        style={styles.priceIcon}
-                        name={
-                            sortByPriceReverse
-                                ? 'chevron-up'
-                                : 'chevron-down'
-                        }
-                        size={15}
-                    />
-                ) : (
-                    ''
-                )}
+                <View style={styles.priceSmallContainer}>
+                    <Text style={[styles.headerText, { color: colors.flipText }]}>
+                        Price
+                    </Text>
+                    {sortBy === 'price' ? (
+                        <Icon
+                            style={styles.priceIcon}
+                            name={
+                                sortByPriceReverse
+                                    ? 'chevron-up'
+                                    : 'chevron-down'
+                            }
+                            size={15}
+                        />
+                    ) : (
+                        ''
+                    )}
+                </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.change} onPress={reverseChangeClick}>
-                <Text style={[styles.headerText, { color: colors.flipText }]}>
-                    Change
-                </Text>
-                {sortBy === 'change' ? (
-                    <Icon
-                        style={styles.changeIcon}
-                        name={
-                            sortByChangeReverse
-                                ? 'chevron-up'
-                                : 'chevron-down'
-                        }
-                        size={15}
-                    />
-                ) : (
-                    ''
-                )}
+                <View style={styles.changeSmallContainer}>
+                    <Text style={[styles.headerText, { color: colors.flipText }]}>
+                        Change
+                    </Text>
+                    {sortBy === 'change' ? (
+                        <Icon
+                            style={styles.changeIcon}
+                            name={
+                                sortByChangeReverse
+                                    ? 'chevron-up'
+                                    : 'chevron-down'
+                            }
+                            size={15}
+                        />
+                    ) : (
+                        ''
+                    )}
+                </View>
             </TouchableOpacity>
         </View>
     );
@@ -94,6 +98,7 @@ export default function CoinListHeader({
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        paddingVertical: 8,
     },
     number: {
         width: 44,
@@ -113,18 +118,24 @@ const styles = StyleSheet.create({
         paddingLeft: 14,
         alignItems: 'center',
     },
+    priceSmallContainer: {
+        position: 'relative',
+    },
     priceIcon: {
         position: 'absolute',
-        right: 16,
+        right: -16,
     },
     change: {
         width: 88,
         minWidth: 88,
         alignItems: 'center',
     },
+    changeSmallContainer: {
+        position: 'relative',
+    },
     changeIcon: {
         position: 'absolute',
-        right: 3,
+        right: -16,
     },
     headerText: {
         fontSize: 14,

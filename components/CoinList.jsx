@@ -45,64 +45,91 @@ function CoinList() {
         setSortByChangeReverse(false);
     }
 
+    const coinSorter = () => {
+        
+    }
+
+    const marketCapSort = (reverse) => {
+        if (reverse) {
+            return setCoins(coins => coins.sort((a, b) => {
+                return a.market_cap_rank - b.market_cap_rank;
+            }));
+        };
+        setCoins(coins => coins.sort((a, b) => {
+            return b.market_cap_rank - a.market_cap_rank;
+        }));
+    }
+
     const reverseNumClick = () => {
         if (sortBy !== 'num') {
+            if (sortBy !== 'marketCap') {
+                marketCapSort(true);
+            }
             newSortClick('num');
-            return setSortBy('num');
+            setSortBy('num');
+            return;
         };
         setSortByNumReverse(sortByNumReverse => !sortByNumReverse);
-        setCoins(coins => coins.reverse());
+        marketCapSort(sortByNumReverse);
     };
 
     const reverseMarketCapClick = () => {
         if (sortBy !== 'marketCap') {
+            if (sortBy !== 'num') {
+                marketCapSort(true);
+            };
             newSortClick('marketCap');
-            return setSortBy('marketCap');
+            setSortBy('marketCap');
+            
+            return;
         };
         setSortByMarketCapReverse(sortByMarketCapReverse => !sortByMarketCapReverse);
-        setCoins(coins => coins.reverse());
+        marketCapSort(sortByMarketCapReverse);
     }
 
     const reversePriceClick = () => {
         if (sortBy !== 'price') {
             newSortClick();
             setSortBy('price');
-            setCoins(coins => coins.sort((a, b) => {
+            return setCoins(coins => coins.sort((a, b) => {
                 let aPrice = numChecker(a.current_price);
                 let bPrice = numChecker(b.current_price);
                 return bPrice - aPrice;
             }));
-            return // sort coins by price, decreasing
         };
         setSortByPriceReverse(sortByPriceReverse => !sortByPriceReverse);
-        setCoins(coins.sort((a, b) => {
+        
+        setCoins(coins => coins.sort((a, b) => {
             let aPrice = numChecker(a.current_price);
             let bPrice = numChecker(b.current_price);
-            return aPrice - bPrice;
+            if (sortByPriceReverse) {
+                return bPrice - aPrice;
+            } else {
+                return aPrice - bPrice;
+            }
         }));
-        // sort by coins expensive to cheap, then cheap to expensive
-        // setCoins()
     }
 
     const reverseChangeClick = () => {
         if (sortBy !== 'change') {
             newSortClick();
             setSortBy('change');
-            setCoins(coins => coins.sort((a, b) => {
+            return setCoins(coins => coins.sort((a, b) => {
                 let aChange = numChecker(a.price_change_percentage_24h);
                 let bChange = numChecker(b.price_change_percentage_24h);
                 return bChange - aChange;
-            }))
-            return // sort coins by change, decreasing
+            }));
         };
         setSortByChangeReverse(sortByChangeReverse => !sortByChangeReverse);
         setCoins(coins => coins.sort((a, b) => {
             let aChange = numChecker(a.price_change_percentage_24h);
             let bChange = numChecker(b.price_change_percentage_24h);
-            return aChange - bChange;
-        }))
-        // sort by change largest to smallest, then smallest to largest
-        // setCoins()
+            if (sortByChangeReverse) {
+                return bChange - aChange;
+            } else {
+                return aChange - bChange;
+            };
+        }));
     }
 
     const renderItem = ({ item, index }) => (
