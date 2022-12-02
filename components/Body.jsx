@@ -13,6 +13,8 @@ function Body() {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        paddingHorizontal: 12,
+        paddingVertical: 4,
     },
     listItem: {
         flexDirection: 'row',
