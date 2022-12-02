@@ -45,38 +45,51 @@ function CoinList() {
         setSortByChangeReverse(false);
     }
 
-    const coinSorter = () => {
-        
-    }
-
-    const marketCapSort = (reverse) => {
-        if (reverse) {
-            return setCoins(coins => coins.sort((a, b) => {
-                return a.market_cap_rank - b.market_cap_rank;
-            }));
-        };
+    const coinSorter = (reverse, sorter) => {
         setCoins(coins => coins.sort((a, b) => {
-            return b.market_cap_rank - a.market_cap_rank;
+            let aNum, bNum;
+
+            if (sorter === 'marketCap') {
+                aNum = a.market_cap_rank;
+                bNum = b.market_cap_rank;
+            }
+            if (sorter === 'price') {
+                aNum = a.current_price;
+                bNum = b.current_price;
+            } 
+            if (sorter === 'change') {
+                aNum = a.price_change_percentage_24h;
+                bNum = b.price_change_percentage_24h;
+            }
+
+            aNum = numChecker(aNum);
+            bNum = numChecker(bNum);
+
+            if (reverse) {
+                return aNum - bNum;
+            } else {
+                return bNum - aNum;
+            }
         }));
-    }
+    };
 
     const reverseNumClick = () => {
         if (sortBy !== 'num') {
             if (sortBy !== 'marketCap') {
-                marketCapSort(true);
+                coinSorter(true, 'marketCap');
             }
             newSortClick('num');
             setSortBy('num');
             return;
         };
         setSortByNumReverse(sortByNumReverse => !sortByNumReverse);
-        marketCapSort(sortByNumReverse);
+        coinSorter(sortByNumReverse, 'marketCap');
     };
 
     const reverseMarketCapClick = () => {
         if (sortBy !== 'marketCap') {
             if (sortBy !== 'num') {
-                marketCapSort(true);
+                coinSorter(true, 'marketCap');
             };
             newSortClick('marketCap');
             setSortBy('marketCap');
@@ -84,52 +97,28 @@ function CoinList() {
             return;
         };
         setSortByMarketCapReverse(sortByMarketCapReverse => !sortByMarketCapReverse);
-        marketCapSort(sortByMarketCapReverse);
+        coinSorter(sortByMarketCapReverse, 'marketCap');
     }
 
     const reversePriceClick = () => {
         if (sortBy !== 'price') {
             newSortClick();
             setSortBy('price');
-            return setCoins(coins => coins.sort((a, b) => {
-                let aPrice = numChecker(a.current_price);
-                let bPrice = numChecker(b.current_price);
-                return bPrice - aPrice;
-            }));
+            coinSorter(false, 'price');
         };
         setSortByPriceReverse(sortByPriceReverse => !sortByPriceReverse);
         
-        setCoins(coins => coins.sort((a, b) => {
-            let aPrice = numChecker(a.current_price);
-            let bPrice = numChecker(b.current_price);
-            if (sortByPriceReverse) {
-                return bPrice - aPrice;
-            } else {
-                return aPrice - bPrice;
-            }
-        }));
+        coinSorter(sortByPriceReverse, 'price');
     }
 
     const reverseChangeClick = () => {
         if (sortBy !== 'change') {
             newSortClick();
             setSortBy('change');
-            return setCoins(coins => coins.sort((a, b) => {
-                let aChange = numChecker(a.price_change_percentage_24h);
-                let bChange = numChecker(b.price_change_percentage_24h);
-                return bChange - aChange;
-            }));
+            coinSorter(false, 'change');
         };
         setSortByChangeReverse(sortByChangeReverse => !sortByChangeReverse);
-        setCoins(coins => coins.sort((a, b) => {
-            let aChange = numChecker(a.price_change_percentage_24h);
-            let bChange = numChecker(b.price_change_percentage_24h);
-            if (sortByChangeReverse) {
-                return bChange - aChange;
-            } else {
-                return aChange - bChange;
-            };
-        }));
+        coinSorter(sortByChangeReverse, 'change')
     }
 
     const renderItem = ({ item, index }) => (
