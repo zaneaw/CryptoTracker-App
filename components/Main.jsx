@@ -47,7 +47,7 @@ function Main() {
                     <SideNav clickNav={clickNav} />
                 </Animated.View>
             )}
-            <View style={[styles.body, { backgroundColor: colors.secondary }]}>
+            <View style={[styles.body, { backgroundColor: colors.background }]}>
                 <Body />
             </View>
         </View>
