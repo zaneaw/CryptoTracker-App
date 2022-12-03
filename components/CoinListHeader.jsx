@@ -60,7 +60,7 @@ export default function CoinListHeader({
                         <Icon
                             style={styles.priceIcon}
                             name={
-                                sortByPriceReverse
+                                !sortByPriceReverse
                                     ? 'chevron-up'
                                     : 'chevron-down'
                             }
@@ -80,7 +80,7 @@ export default function CoinListHeader({
                         <Icon
                             style={styles.changeIcon}
                             name={
-                                sortByChangeReverse
+                                !sortByChangeReverse
                                     ? 'chevron-up'
                                     : 'chevron-down'
                             }
