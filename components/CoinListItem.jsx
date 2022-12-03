@@ -57,7 +57,7 @@ function CoinListItem({ item, index }) {
     };
 
     return (
-        <TouchableOpacity style={styles.listItem}>
+        <TouchableOpacity style={styles.listItem} onPress={() => console.log(item.id)} >
             <Text style={[styles.coinNum, styles.textSize, { color: colors.flipText }]}>
                 {item.market_cap_rank}
             </Text>
