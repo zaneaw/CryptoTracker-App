@@ -1,5 +1,5 @@
-import { View, FlatList, ActivityIndicator, Text } from 'react-native';
-import React, { useState, useEffect, useCallback } from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '../theme/ThemeProvider';
 import CoinListItem from './CoinListItem';
 import CoinListHeader from './CoinListHeader';
@@ -27,7 +27,7 @@ function CoinList() {
         }
 
         return num;
-    }
+    };
 
     const newSortClick = (curr) => {
         if (curr === 'num') {
@@ -52,15 +52,15 @@ function CoinList() {
             if (sorter === 'marketCap') {
                 aNum = a.market_cap_rank;
                 bNum = b.market_cap_rank;
-            }
+            };
             if (sorter === 'price') {
                 aNum = a.current_price;
                 bNum = b.current_price;
-            } 
+            };
             if (sorter === 'change') {
                 aNum = a.price_change_percentage_24h;
                 bNum = b.price_change_percentage_24h;
-            }
+            };
 
             aNum = numChecker(aNum);
             bNum = numChecker(bNum);
@@ -69,7 +69,7 @@ function CoinList() {
                 return aNum - bNum;
             } else {
                 return bNum - aNum;
-            }
+            };
         }));
     };
 
