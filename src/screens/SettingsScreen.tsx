@@ -6,21 +6,21 @@ import { ToggleTheme } from '../components';
 
 export const SettingsScreen: React.FC = () => {
     const { colors } = useTheme();
-    
+
     return (
-        <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
-            
+        <SafeAreaView
+            style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={[styles.navItemContainer]}>
-                <Text style={{color: colors.flipText}}>Option 1</Text>
+                <Text style={{ color: colors.flipText }}>Option 1</Text>
             </View>
 
             <View style={[styles.darkModeContainer]}>
-                <Text style={{color: colors.flipText}}>Dark Mode:</Text>
+                <Text style={{ color: colors.flipText }}>Dark Mode:</Text>
                 <ToggleTheme />
             </View>
         </SafeAreaView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 4,
     },
-})
+});

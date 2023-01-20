@@ -22,16 +22,17 @@ export const App = () => {
                         options={({ navigation }) => ({
                             title: 'Crypto Tracker',
                             headerRight: () => (
-                                <TouchableOpacity 
-                                    onPress={() => navigation.navigate("Settings")}
-                                >
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        navigation.navigate('Settings')
+                                    }>
                                     <Icon
                                         name="settings"
                                         size={15}
-                                        color='#2D3142'
+                                        color="#2D3142"
                                     />
                                 </TouchableOpacity>
-                            )
+                            ),
                         })}
                     />
                     <Stack.Screen
@@ -40,18 +41,18 @@ export const App = () => {
                         options={({ route, navigation }) => ({
                             title: route.params.coinId.toUpperCase(),
                             headerRight: () => (
-                                <TouchableOpacity 
-                                    onPress={() => navigation.navigate("Settings")}
-                                >
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        navigation.navigate('Settings')
+                                    }>
                                     <Icon
                                         name="settings"
                                         size={15}
-                                        color='#2D3142'
+                                        color="#2D3142"
                                     />
                                 </TouchableOpacity>
-                            )
+                            ),
                         })}
-                        
                     />
                     <Stack.Screen
                         name="Settings"

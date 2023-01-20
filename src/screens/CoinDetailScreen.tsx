@@ -4,16 +4,17 @@ import { useTheme } from '../../theme/ThemeProvider';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../routes';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>
+type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>;
 
 export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
     const { colors } = useTheme();
     const { coinId } = route.params;
 
     return (
-        <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
+        <SafeAreaView
+            style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={[styles.body, { backgroundColor: colors.background }]}>
-                <Text style={{color: colors.flipText}}>{coinId}</Text>
+                <Text style={{ color: colors.flipText }}>{coinId}</Text>
             </View>
         </SafeAreaView>
     );
@@ -31,4 +32,4 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 4,
     },
-})
+});

@@ -14,7 +14,7 @@ export const darkColors = {
     secondary: '#BFC0C0', // SILVER
     background: '#4F5D75', // BLACK CORAL
     backgroundDark: '#3A4557',
-    header: '#FADDD1', // ORANGE, header text 
+    header: '#FADDD1', // ORANGE, header text
     text: '#000000', // BLACK
     flipText: '#FFFFFF', // WHITE
     error: '#EF4444', // RED

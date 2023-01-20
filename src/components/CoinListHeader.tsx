@@ -13,7 +13,7 @@ type Props = {
     reverseMarketCapClick: () => void;
     reversePriceClick: () => void;
     reverseChangeClick: () => void;
-}
+};
 
 export const CoinListHeader: React.FC<Props> = ({
     sortBy,

@@ -10,17 +10,21 @@ import { RootStackParamList } from '../routes';
 
 type Props = {
     item: CoinValidator;
-}
+};
 
 const largeNumFormatter = (marketCap: number) => {
     let formattedNum: string | number;
-    if (marketCap >= 1000000000000) { // trillion
+    if (marketCap >= 1000000000000) {
+        // trillion
         formattedNum = (marketCap / 1000000000000).toFixed(2) + ' T';
-    } else if (marketCap >= 1000000000) { // billion
+    } else if (marketCap >= 1000000000) {
+        // billion
         formattedNum = (marketCap / 1000000000).toFixed(2) + ' B';
-    } else if (marketCap >= 1000000) { // million
+    } else if (marketCap >= 1000000) {
+        // million
         formattedNum = (marketCap / 1000000).toFixed(2) + ' M';
-    } else if (marketCap >= 1000) { // thousands
+    } else if (marketCap >= 1000) {
+        // thousands
         formattedNum = (marketCap / 1000).toFixed(2) + ' K';
     } else {
         formattedNum = marketCap;
@@ -30,7 +34,8 @@ const largeNumFormatter = (marketCap: number) => {
 };
 
 export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const navigation =
+        useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const { colors } = useTheme();
 
     let coinImage: string = item.image.replace('large', 'small');
@@ -43,11 +48,11 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
     if (priceChange < 0) {
         priceChangeNeg = true;
         priceChange = Math.abs(priceChange);
-    };
+    }
 
-    if (marketCap > .01) {
+    if (marketCap > 0.01) {
         marketCap = largeNumFormatter(marketCap);
-    };
+    }
 
     if (String(currPrice).includes('e')) {
         currPrice = String(currPrice).split('e')[0];
@@ -55,24 +60,26 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
     }
 
     if (currPrice > 0.01) {
-        currPrice = Number(currPrice).toLocaleString(
-            undefined,
-            {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-            }
-        );
+        currPrice = Number(currPrice).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
     } else {
         currPrice = Number(currPrice).toFixed(8);
-    };
-
-    const onPressCoinDetail = () => {
-        navigation.navigate('CoinDetail', {coinId: item.id})
     }
 
+    const onPressCoinDetail = () => {
+        navigation.navigate('CoinDetail', { coinId: item.id });
+    };
+
     return (
-        <TouchableOpacity style={styles.listItem} onPress={onPressCoinDetail} >
-            <Text style={[styles.coinNum, styles.textSize, { color: colors.flipText }]}>
+        <TouchableOpacity style={styles.listItem} onPress={onPressCoinDetail}>
+            <Text
+                style={[
+                    styles.coinNum,
+                    styles.textSize,
+                    { color: colors.flipText },
+                ]}>
                 {item.market_cap_rank}
             </Text>
             <View style={styles.imageNameCapContainer}>
@@ -82,7 +89,11 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
                 />
                 <View>
                     <Text
-                        style={[styles.coinSymbol, styles.textSize, { color: colors.flipText }]}>
+                        style={[
+                            styles.coinSymbol,
+                            styles.textSize,
+                            { color: colors.flipText },
+                        ]}>
                         {item.symbol.toUpperCase()}
                     </Text>
                     <Text
@@ -92,19 +103,25 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
                 </View>
             </View>
             <View style={styles.currPriceContainer}>
-                <Text style={[styles.currPrice, styles.textSize, { color: colors.flipText }]}>
+                <Text
+                    style={[
+                        styles.currPrice,
+                        styles.textSize,
+                        { color: colors.flipText },
+                    ]}>
                     ${currPrice}
                 </Text>
             </View>
             <View style={styles.changeContainer}>
-                <View style={[
-                    styles.changeSmallContainer,
-                    {
-                        backgroundColor: `${
-                            priceChangeNeg ? '#FFCCCB' : '#90EE90'
-                        }`,
-                    },
-                ]}>
+                <View
+                    style={[
+                        styles.changeSmallContainer,
+                        {
+                            backgroundColor: `${
+                                priceChangeNeg ? '#FFCCCB' : '#90EE90'
+                            }`,
+                        },
+                    ]}>
                     <Icon
                         style={{
                             color: `${priceChangeNeg ? '#8B0000' : '#013220'}`,
@@ -113,9 +130,14 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
                         size={15}
                     />
                     <Text
-                        style={[styles.textSize, {
-                            color: `${priceChangeNeg ? '#8B0000' : '#013220'}`,
-                        }]}>
+                        style={[
+                            styles.textSize,
+                            {
+                                color: `${
+                                    priceChangeNeg ? '#8B0000' : '#013220'
+                                }`,
+                            },
+                        ]}>
                         {priceChange.toFixed(2)}%
                     </Text>
                 </View>
@@ -163,7 +185,7 @@ const styles = StyleSheet.create({
         marginRight: 4,
     },
     coinSymbol: {
-        fontWeight: '600'
+        fontWeight: '600',
     },
     marketCap: {
         fontWeight: '300',
@@ -174,6 +196,6 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     textSize: {
-        fontSize: 16
+        fontSize: 16,
     },
 });

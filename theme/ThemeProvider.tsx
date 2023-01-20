@@ -6,7 +6,7 @@ type ThemeContextType = {
     isDark: boolean;
     colors: any;
     setScheme: (scheme: string) => any;
-}
+};
 
 export const ThemeContext = createContext<ThemeContextType>({
     isDark: false,
@@ -14,7 +14,7 @@ export const ThemeContext = createContext<ThemeContextType>({
     setScheme: () => {},
 });
 
-export const ThemeProvider: React.FC<React.PropsWithChildren> = (props) => {
+export const ThemeProvider: React.FC<React.PropsWithChildren> = props => {
     const colorScheme = useColorScheme();
     const [isDark, setIsDark] = useState(false);
 
