@@ -1,34 +1,44 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import { useTheme } from '../theme/ThemeProvider';
+import { useTheme } from '../../theme/ThemeProvider';
 
-const largeNumFormatter = (marketCap) => {
+import { CoinValidator } from '../Validators/CoinValidator';
+import { RootStackParamList } from '../routes';
+
+type Props = {
+    item: CoinValidator;
+}
+
+const largeNumFormatter = (marketCap: number) => {
+    let formattedNum: string | number;
     if (marketCap >= 1000000000000) { // trillion
-        marketCap = (marketCap / 1000000000000).toFixed(2) + ' T';
+        formattedNum = (marketCap / 1000000000000).toFixed(2) + ' T';
     } else if (marketCap >= 1000000000) { // billion
-        marketCap = (marketCap / 1000000000).toFixed(2) + ' B';
+        formattedNum = (marketCap / 1000000000).toFixed(2) + ' B';
     } else if (marketCap >= 1000000) { // million
-        marketCap = (marketCap / 1000000).toFixed(2) + ' M';
+        formattedNum = (marketCap / 1000000).toFixed(2) + ' M';
     } else if (marketCap >= 1000) { // thousands
-        marketCap = (marketCap / 1000).toFixed(2) + ' K';
+        formattedNum = (marketCap / 1000).toFixed(2) + ' K';
     } else {
-        marketCap = marketCap;
+        formattedNum = marketCap;
     }
 
-    return marketCap;
+    return formattedNum;
 };
 
-// onPress = open specific coin in single coin view
-function CoinListItem({ item, index }) {
+export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const { colors } = useTheme();
 
-    let coinImage = item.image.replace('large', 'small');
-    let marketCap = item.market_cap;
-    let currPrice = item.current_price;
+    let coinImage: string = item.image.replace('large', 'small');
+    let marketCap: string | number = item.market_cap;
+    let currPrice: string | number = item.current_price;
 
-    let priceChange = item.price_change_percentage_24h;
-    let priceChangeNeg = false;
+    let priceChange: number = item.price_change_percentage_24h;
+    let priceChangeNeg: boolean = false;
 
     if (priceChange < 0) {
         priceChangeNeg = true;
@@ -56,8 +66,12 @@ function CoinListItem({ item, index }) {
         currPrice = Number(currPrice).toFixed(8);
     };
 
+    const onPressCoinDetail = () => {
+        navigation.navigate('CoinDetail', {coinId: item.id})
+    }
+
     return (
-        <TouchableOpacity style={styles.listItem} onPress={() => console.log(item.id)} >
+        <TouchableOpacity style={styles.listItem} onPress={onPressCoinDetail} >
             <Text style={[styles.coinNum, styles.textSize, { color: colors.flipText }]}>
                 {item.market_cap_rank}
             </Text>
@@ -66,7 +80,7 @@ function CoinListItem({ item, index }) {
                     style={[styles.coinImage, { width: 25, height: 25 }]}
                     source={{ uri: coinImage }}
                 />
-                <View style={styles.nameCapContainer}>
+                <View>
                     <Text
                         style={[styles.coinSymbol, styles.textSize, { color: colors.flipText }]}>
                         {item.symbol.toUpperCase()}
@@ -108,7 +122,7 @@ function CoinListItem({ item, index }) {
             </View>
         </TouchableOpacity>
     );
-}
+});
 
 const styles = StyleSheet.create({
     listItem: {
@@ -163,5 +177,3 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
 });
-
-export default React.memo(CoinListItem);

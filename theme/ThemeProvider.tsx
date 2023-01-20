@@ -1,14 +1,20 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { lightColors, darkColors } from './colorThemes';
 
-export const ThemeContext = createContext({
+type ThemeContextType = {
+    isDark: boolean;
+    colors: any;
+    setScheme: (scheme: string) => any;
+}
+
+export const ThemeContext = createContext<ThemeContextType>({
     isDark: false,
     colors: lightColors,
     setScheme: () => {},
 });
 
-export const ThemeProvider = props => {
+export const ThemeProvider: React.FC<React.PropsWithChildren> = (props) => {
     const colorScheme = useColorScheme();
     const [isDark, setIsDark] = useState(false);
 
@@ -19,7 +25,7 @@ export const ThemeProvider = props => {
     const defaultTheme = {
         isDark,
         colors: isDark ? darkColors : lightColors,
-        setScheme: scheme => setIsDark(scheme === 'dark'),
+        setScheme: (scheme: string) => setIsDark(scheme === 'dark'),
     };
 
     return (

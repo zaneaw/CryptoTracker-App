@@ -1,9 +1,21 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { useTheme } from '../theme/ThemeProvider';
+import { useTheme } from '../../theme/ThemeProvider';
 import Icon from 'react-native-vector-icons/Feather';
 
-export default function CoinListHeader({
+type Props = {
+    sortBy: string;
+    sortByNumReverse: boolean;
+    sortByMarketCapReverse: boolean;
+    sortByPriceReverse: boolean;
+    sortByChangeReverse: boolean;
+    reverseNumClick: () => void;
+    reverseMarketCapClick: () => void;
+    reversePriceClick: () => void;
+    reverseChangeClick: () => void;
+}
+
+export const CoinListHeader: React.FC<Props> = ({
     sortBy,
     sortByNumReverse,
     sortByMarketCapReverse,
@@ -13,7 +25,7 @@ export default function CoinListHeader({
     reverseMarketCapClick,
     reversePriceClick,
     reverseChangeClick,
-}) {
+}) => {
     const { colors } = useTheme();
 
     return (
@@ -27,6 +39,7 @@ export default function CoinListHeader({
                     <Icon
                         name={sortByNumReverse ? 'chevron-up' : 'chevron-down'}
                         size={15}
+                        color={colors.flipText}
                     />
                 ) : (
                     ''
@@ -46,6 +59,7 @@ export default function CoinListHeader({
                                 : 'chevron-down'
                         }
                         size={15}
+                        color={colors.flipText}
                     />
                 ) : (
                     ''
@@ -53,7 +67,8 @@ export default function CoinListHeader({
             </TouchableOpacity>
             <TouchableOpacity style={styles.price} onPress={reversePriceClick}>
                 <View style={styles.priceSmallContainer}>
-                    <Text style={[styles.headerText, { color: colors.flipText }]}>
+                    <Text
+                        style={[styles.headerText, { color: colors.flipText }]}>
                         Price
                     </Text>
                     {sortBy === 'price' ? (
@@ -65,15 +80,19 @@ export default function CoinListHeader({
                                     : 'chevron-down'
                             }
                             size={15}
+                            color={colors.flipText}
                         />
                     ) : (
                         ''
                     )}
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.change} onPress={reverseChangeClick}>
+            <TouchableOpacity
+                style={styles.change}
+                onPress={reverseChangeClick}>
                 <View style={styles.changeSmallContainer}>
-                    <Text style={[styles.headerText, { color: colors.flipText }]}>
+                    <Text
+                        style={[styles.headerText, { color: colors.flipText }]}>
                         Change
                     </Text>
                     {sortBy === 'change' ? (
@@ -85,6 +104,7 @@ export default function CoinListHeader({
                                     : 'chevron-down'
                             }
                             size={15}
+                            color={colors.flipText}
                         />
                     ) : (
                         ''
@@ -93,7 +113,7 @@ export default function CoinListHeader({
             </TouchableOpacity>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {

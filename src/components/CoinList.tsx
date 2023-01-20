@@ -1,35 +1,34 @@
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList, ActivityIndicator, ListRenderItem } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '../theme/ThemeProvider';
-import CoinListItem from './CoinListItem';
-import CoinListHeader from './CoinListHeader';
-import coinData from '../exampleApi';
+import { useTheme } from '../../theme/ThemeProvider';
 
-function CoinList() {
+import { CoinValidator } from '../Validators/CoinValidator';
+import { CoinListItem, CoinListHeader } from './index'
+
+import coinData from '../../exampleApi';
+
+export const CoinList = () => {
     const { colors } = useTheme();
-    const [coins, setCoins] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [sortBy, setSortBy] = useState('num');
-    const [sortByNumReverse, setSortByNumReverse] = useState(false);
-    const [sortByMarketCapReverse, setSortByMarketCapReverse] = useState(false);
-    const [sortByPriceReverse, setSortByPriceReverse] = useState(false);
-    const [sortByChangeReverse, setSortByChangeReverse] = useState(false);
+    const [coins, setCoins] = useState<CoinValidator[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [sortBy, setSortBy] = useState<string>('num');
+    const [sortByNumReverse, setSortByNumReverse] = useState<boolean>(false);
+    const [sortByMarketCapReverse, setSortByMarketCapReverse] = useState<boolean>(false);
+    const [sortByPriceReverse, setSortByPriceReverse] = useState<boolean>(false);
+    const [sortByChangeReverse, setSortByChangeReverse] = useState<boolean>(false);
 
-    useEffect(() => {
-        getCoins();
-        setIsLoading(false);
-    }, []);
 
-    const numChecker = (num) => {
-        if (String(num).includes('e')) {
-            num = String(num).split('e')[0];
-            num = Number(num);
+    const numChecker = (num: number): number => {
+        let numToString: string = String(num);
+        if (numToString.includes('e')) {
+            numToString = numToString.split('e')[0];
+            num = Number(numToString);
         }
 
         return num;
     };
 
-    const newSortClick = (curr) => {
+    const newSortClick = (curr?: string) => {
         if (curr === 'num') {
             setSortByNumReverse(sortByMarketCapReverse);
         } else {
@@ -45,9 +44,10 @@ function CoinList() {
         setSortByChangeReverse(false);
     }
 
-    const coinSorter = (reverse, sorter) => {
+    const coinSorter = (reverse: boolean, sorter: string) => {
         setCoins(coins => coins.sort((a, b) => {
-            let aNum, bNum;
+            let aNum!: number;
+            let bNum!: number;
 
             if (sorter === 'marketCap') {
                 aNum = a.market_cap_rank;
@@ -67,13 +67,13 @@ function CoinList() {
 
             if (reverse) {
                 return aNum - bNum;
-            } else {
-                return bNum - aNum;
-            };
+            }
+
+            return bNum - aNum;
         }));
     };
 
-    const reverseNumClick = () => {
+    const reverseNumClick = (): void => {
         if (sortBy !== 'num') {
             if (sortBy !== 'marketCap') {
                 coinSorter(true, 'marketCap');
@@ -86,7 +86,7 @@ function CoinList() {
         coinSorter(sortByNumReverse, 'marketCap');
     };
 
-    const reverseMarketCapClick = () => {
+    const reverseMarketCapClick = (): void => {
         if (sortBy !== 'marketCap') {
             if (sortBy !== 'num') {
                 coinSorter(true, 'marketCap');
@@ -100,7 +100,7 @@ function CoinList() {
         coinSorter(sortByMarketCapReverse, 'marketCap');
     }
 
-    const reversePriceClick = () => {
+    const reversePriceClick = (): void => {
         if (sortBy !== 'price') {
             newSortClick();
             setSortBy('price');
@@ -111,7 +111,7 @@ function CoinList() {
         coinSorter(sortByPriceReverse, 'price');
     }
 
-    const reverseChangeClick = () => {
+    const reverseChangeClick = (): void => {
         if (sortBy !== 'change') {
             newSortClick();
             setSortBy('change');
@@ -121,12 +121,12 @@ function CoinList() {
         coinSorter(sortByChangeReverse, 'change')
     }
 
-    const renderItem = ({ item, index }) => (
+    const renderItem: ListRenderItem<CoinValidator> = ({ item }) => (
         <CoinListItem key={item.id} item={item} />
     );
 
     const getCoins = () => {
-        // fetch('https://zanes-crypto-tracker-server.cyclic.app/api')
+        // fetch('https://zanes-crypto-tracker-server.cyclic.app/api/getAllCoins')
         //     .then((res) => res.json())
         //     .then((json) => setCoins(json))
         //     .catch((err) => console.error(err));
@@ -134,6 +134,11 @@ function CoinList() {
             setCoins(coinData);
         }, 50);
     };
+
+    useEffect(() => {
+        getCoins();
+        setIsLoading(false);
+    }, []);
 
     return (
         <View>
@@ -143,7 +148,7 @@ function CoinList() {
                 <FlatList
                     data={coins}
                     renderItem={renderItem}
-                    keyExtractor={coin => coin.id}
+                    keyExtractor={item => item.id}
                     ListHeaderComponent={
                         <CoinListHeader
                             sortBy={sortBy}
@@ -171,5 +176,3 @@ function CoinList() {
         </View>
     );
 }
-
-export default CoinList;

@@ -1,23 +1,14 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 import React from 'react';
-import { useTheme } from '../theme/ThemeProvider';
-import Icon from 'react-native-vector-icons/Feather';
+import { useTheme } from '../../theme/ThemeProvider';
 
-import Toggle from './Toggle';
+import { ToggleTheme } from '../components';
 
-export default function SideNav({ clickNav }) {
+export const SettingsScreen: React.FC = () => {
     const { colors } = useTheme();
     
-
     return (
-        <View style={[styles.container, {backgroundColor: colors.background}]}>
-
-            <View style={[styles.header, {backgroundColor: colors.primary}]}>
-                <TouchableOpacity onPress={() => clickNav()} style={[styles.closeButtonTop, {borderColor: colors.header}]}>
-                    <Icon name="x" size ={30} color={colors.header} />
-                </TouchableOpacity>
-                <Text style={[styles.headerText, {color: colors.header}]}>SideNav</Text>
-            </View>
+        <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
             
             <View style={[styles.navItemContainer]}>
                 <Text style={{color: colors.flipText}}>Option 1</Text>
@@ -25,15 +16,9 @@ export default function SideNav({ clickNav }) {
 
             <View style={[styles.darkModeContainer]}>
                 <Text style={{color: colors.flipText}}>Dark Mode:</Text>
-                <Toggle />
+                <ToggleTheme />
             </View>
-
-            <View style={[styles.footer, {backgroundColor: colors.primary}]}>
-                <TouchableOpacity onPress={() => clickNav()} style={[styles.closeButtonBottom, {borderColor: colors.header}]}>
-                    <Icon name="x" size ={30} color={colors.header} />
-                </TouchableOpacity>
-            </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
