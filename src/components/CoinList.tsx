@@ -15,7 +15,6 @@ import coinData from '../../exampleApi';
 export const CoinList = () => {
     const { colors } = useTheme();
     const [coins, setCoins] = useState<CoinValidator[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [sortBy, setSortBy] = useState<string>('num');
     const [sortByNumReverse, setSortByNumReverse] = useState<boolean>(false);
     const [sortByMarketCapReverse, setSortByMarketCapReverse] =
@@ -137,25 +136,21 @@ export const CoinList = () => {
     );
 
     const getCoins = () => {
-        // fetch('https://zanes-crypto-tracker-server.cyclic.app/api/getAllCoins')
-        //     .then((res) => res.json())
-        //     .then((json) => setCoins(json))
-        //     .catch((err) => console.error(err));
-        setTimeout(() => {
-            setCoins(coinData);
-        }, 50);
+        fetch(
+            'https://zanes-crypto-tracker-server.cyclic.app/api/get-all-coins',
+        )
+            .then(res => res.json())
+            .then(json => setCoins(json))
+            .catch(err => console.error(err));
     };
 
     useEffect(() => {
         getCoins();
-        setIsLoading(false);
     }, []);
 
     return (
         <View>
-            {isLoading ? (
-                <ActivityIndicator size="large" color={colors.primary} />
-            ) : (
+            {coins ? (
                 <FlatList
                     data={coins}
                     renderItem={renderItem}
@@ -183,7 +178,7 @@ export const CoinList = () => {
                     }}
                     stickyHeaderIndices={[0]}
                 />
-            )}
+            ) : null}
         </View>
     );
 };
