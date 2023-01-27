@@ -2,56 +2,27 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from '../../theme/ThemeProvider';
 
+import { useLargeNumFormatter, usePriceChangeOptions } from '../Hooks';
 import { CoinValidator } from '../Validators/CoinValidator';
 import { RootStackParamList } from '../routes';
+import { PriceChangePercentageDisplay } from './mini-components';
 
 type Props = {
     item: CoinValidator;
 };
 
-const largeNumFormatter = (marketCap: number) => {
-    let formattedNum: string | number;
-    if (marketCap >= 1000000000000) {
-        // trillion
-        formattedNum = (marketCap / 1000000000000).toFixed(2) + ' T';
-    } else if (marketCap >= 1000000000) {
-        // billion
-        formattedNum = (marketCap / 1000000000).toFixed(2) + ' B';
-    } else if (marketCap >= 1000000) {
-        // million
-        formattedNum = (marketCap / 1000000).toFixed(2) + ' M';
-    } else if (marketCap >= 1000) {
-        // thousands
-        formattedNum = (marketCap / 1000).toFixed(2) + ' K';
-    } else {
-        formattedNum = marketCap;
-    }
-
-    return formattedNum;
-};
-
 export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
-    const navigation =
-        useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const { colors } = useTheme();
 
-    let coinImage: string = item.image.replace('large', 'small');
+    // let coinImage: string = item.image.replace('large', 'small');
     let marketCap: string | number = item.market_cap;
     let currPrice: string | number = item.current_price;
 
-    let priceChange: number = item.price_change_percentage_24h;
-    let priceChangeNeg: boolean = false;
-
-    if (priceChange < 0) {
-        priceChangeNeg = true;
-        priceChange = Math.abs(priceChange);
-    }
-
     if (marketCap > 0.01) {
-        marketCap = largeNumFormatter(marketCap);
+        marketCap = useLargeNumFormatter(marketCap);
     }
 
     if (String(currPrice).includes('e')) {
@@ -85,7 +56,7 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
             <View style={styles.imageNameCapContainer}>
                 <Image
                     style={[styles.coinImage, { width: 25, height: 25 }]}
-                    source={{ uri: coinImage }}
+                    source={{ uri: item.image }}
                 />
                 <View>
                     <Text
@@ -113,34 +84,7 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
                 </Text>
             </View>
             <View style={styles.changeContainer}>
-                <View
-                    style={[
-                        styles.changeSmallContainer,
-                        {
-                            backgroundColor: `${
-                                priceChangeNeg ? '#FFCCCB' : '#90EE90'
-                            }`,
-                        },
-                    ]}>
-                    <Icon
-                        style={{
-                            color: `${priceChangeNeg ? '#8B0000' : '#013220'}`,
-                        }}
-                        name={priceChangeNeg ? 'chevron-down' : 'chevron-up'}
-                        size={15}
-                    />
-                    <Text
-                        style={[
-                            styles.textSize,
-                            {
-                                color: `${
-                                    priceChangeNeg ? '#8B0000' : '#013220'
-                                }`,
-                            },
-                        ]}>
-                        {priceChange.toFixed(2)}%
-                    </Text>
-                </View>
+                <PriceChangePercentageDisplay priceChangeAmount={item.price_change_percentage_24h} />
             </View>
         </TouchableOpacity>
     );
@@ -172,14 +116,6 @@ const styles = StyleSheet.create({
     changeContainer: {
         width: 88,
         minWidth: 88,
-    },
-    changeSmallContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'flex-end',
-        paddingVertical: 6,
-        paddingHorizontal: 4,
-        borderRadius: 4,
     },
     coinImage: {
         marginRight: 4,

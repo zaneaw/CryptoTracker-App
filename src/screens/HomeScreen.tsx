@@ -10,7 +10,6 @@ import { CoinList } from '../components';
 type HomeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export const HomeScreen = () => {
-    const navigation = useNavigation<HomeScreenProp>();
     const { colors } = useTheme();
 
     return (
