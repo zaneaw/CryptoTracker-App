@@ -10,20 +10,19 @@ import { useTheme } from '../../../theme/ThemeProvider';
 import { CoinValidator } from '../../Validators/CoinValidator';
 import { CoinListItem, CoinListHeader } from '../index';
 
-import coinData from '../../../exampleApi';
-
 export const CoinList = () => {
     const { colors } = useTheme();
     const [coins, setCoins] = useState<CoinValidator[]>([]);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [sortBy, setSortBy] = useState<string>('num');
-    const [sortByNumReverse, setSortByNumReverse] = useState<boolean>(false);
-    const [sortByMarketCapReverse, setSortByMarketCapReverse] =
-        useState<boolean>(false);
-    const [sortByPriceReverse, setSortByPriceReverse] =
-        useState<boolean>(false);
-    const [sortByChangeReverse, setSortByChangeReverse] =
-        useState<boolean>(false);
+    const [reverseSort, setReverseSort] = useState<boolean>(false);
+    // const [sortByNumReverse, setSortByNumReverse] = useState<boolean>(false);
+    // const [sortByMarketCapReverse, setSortByMarketCapReverse] =
+    //     useState<boolean>(false);
+    // const [sortByPriceReverse, setSortByPriceReverse] =
+    //     useState<boolean>(false);
+    // const [sortByChangeReverse, setSortByChangeReverse] =
+    //     useState<boolean>(false);
 
     const numChecker = (num: number): number => {
         let numToString: string = String(num);
@@ -35,111 +34,54 @@ export const CoinList = () => {
         return num;
     };
 
-    const newSortClick = (curr?: string) => {
-        if (curr === 'num') {
-            setSortByNumReverse(sortByMarketCapReverse);
-        } else {
-            setSortByNumReverse(false);
-        }
-        if (curr === 'marketCap') {
-            setSortByMarketCapReverse(sortByNumReverse);
-        } else {
-            setSortByMarketCapReverse(false);
-        }
+    useMemo(() => {
+        const newCoins = coins.sort((a: CoinValidator, b: CoinValidator) => {
+            let aNum!: number;
+            let bNum!: number;
 
-        setSortByPriceReverse(false);
-        setSortByChangeReverse(false);
-    };
+            if (sortBy === 'num') {
+                // reversed
+                bNum = a.market_cap_rank;
+                aNum = b.market_cap_rank;
+            }
+            if (sortBy === 'marketCap') {
+                // reversed
+                bNum = a.market_cap_rank;
+                aNum = b.market_cap_rank;
+            }
+            if (sortBy === 'price') {
+                aNum = a.current_price;
+                bNum = b.current_price;
+            }
+            if (sortBy === 'changePercentage') {
+                aNum = a.price_change_percentage_24h;
+                bNum = b.price_change_percentage_24h;
+            }
 
-    const coinSorter = (reverse: boolean, sorter: string) => {
-        setCoins((coins: CoinValidator[]) =>
-            coins.sort((a: CoinValidator, b: CoinValidator) => {
-                let aNum!: number;
-                let bNum!: number;
+            aNum = numChecker(aNum);
+            bNum = numChecker(bNum);
 
-                if (sorter === 'marketCap') {
-                    aNum = a.market_cap_rank;
-                    bNum = b.market_cap_rank;
-                }
-                if (sorter === 'price') {
-                    aNum = a.current_price;
-                    bNum = b.current_price;
-                }
-                if (sorter === 'change') {
-                    aNum = a.price_change_percentage_24h;
-                    bNum = b.price_change_percentage_24h;
-                }
+            if (reverseSort) {
+                return aNum - bNum;
+            }
 
-                aNum = numChecker(aNum);
-                bNum = numChecker(bNum);
+            return bNum - aNum;
+        });
 
-                if (reverse) {
-                    return aNum - bNum;
-                }
-
-                return bNum - aNum;
-            }),
-        );
-
+        setCoins(newCoins);
         setIsUpdating(false);
-    };
+    }, [sortBy, reverseSort]);
 
-    const reverseNumClick = (): void => {
-        setIsUpdating(true);
-
-        if (sortBy !== 'num') {
-            if (sortBy !== 'marketCap') {
-                coinSorter(true, 'marketCap');
+    const clickSortOption = (option: string) => {
+        if (sortBy === option) {
+            if (reverseSort) {
+                return setReverseSort(false);
             }
-            newSortClick('num');
-            setSortBy('num');
-            return;
+            return setReverseSort(true);
         }
-        setSortByNumReverse((sortByNumReverse: boolean) => !sortByNumReverse);
-        coinSorter(sortByNumReverse, 'marketCap');
-    };
 
-    const reverseMarketCapClick = (): void => {
-        setIsUpdating(true);
-
-        if (sortBy !== 'marketCap') {
-            if (sortBy !== 'num') {
-                coinSorter(true, 'marketCap');
-            }
-            newSortClick('marketCap');
-            setSortBy('marketCap');
-
-            return;
-        }
-        setSortByMarketCapReverse(
-            (sortByMarketCapReverse: boolean) => !sortByMarketCapReverse,
-        );
-        coinSorter(sortByMarketCapReverse, 'marketCap');
-    };
-
-    const reversePriceClick = (): void => {
-        setIsUpdating(true);
-
-        if (sortBy !== 'price') {
-            newSortClick();
-            setSortBy('price');
-            coinSorter(false, 'price');
-        }
-        setSortByPriceReverse((sortByPriceReverse: boolean) => !sortByPriceReverse);
-
-        coinSorter(sortByPriceReverse, 'price');
-    };
-
-    const reverseChangeClick = (): void => {
-        setIsUpdating(true);
-
-        if (sortBy !== 'change') {
-            newSortClick();
-            setSortBy('change');
-            coinSorter(false, 'change');
-        }
-        setSortByChangeReverse((sortByChangeReverse: boolean) => !sortByChangeReverse);
-        coinSorter(sortByChangeReverse, 'change');
+        setSortBy(option);
+        setReverseSort(false);
     };
 
     const renderItem: ListRenderItem<CoinValidator> = ({ item }) => (
@@ -162,13 +104,8 @@ export const CoinList = () => {
     return (
         <View>
             {isUpdating ? (
-                    <ActivityIndicator
-                        size="large"
-                        color={colors.primary}
-                    />
-                ) : (
-                    undefined
-            )}
+                <ActivityIndicator size="large" color={colors.primary} />
+            ) : undefined}
             {coins ? (
                 <FlatList
                     data={coins}
@@ -177,14 +114,16 @@ export const CoinList = () => {
                     ListHeaderComponent={
                         <CoinListHeader
                             sortBy={sortBy}
-                            sortByNumReverse={sortByNumReverse}
-                            sortByMarketCapReverse={sortByMarketCapReverse}
-                            sortByPriceReverse={sortByPriceReverse}
-                            sortByChangeReverse={sortByChangeReverse}
-                            reverseNumClick={reverseNumClick}
-                            reverseMarketCapClick={reverseMarketCapClick}
-                            reversePriceClick={reversePriceClick}
-                            reverseChangeClick={reverseChangeClick}
+                            clickSortOption={clickSortOption}
+                            reverseSort={reverseSort}
+                            // sortByNumReverse={sortByNumReverse}
+                            // sortByMarketCapReverse={sortByMarketCapReverse}
+                            // sortByPriceReverse={sortByPriceReverse}
+                            // sortByChangeReverse={sortByChangeReverse}
+                            // reverseNumClick={reverseNumClick}
+                            // reverseMarketCapClick={reverseMarketCapClick}
+                            // reversePriceClick={reversePriceClick}
+                            // reverseChangeClick={reverseChangeClick}
                         />
                     }
                     ListEmptyComponent={() => {
