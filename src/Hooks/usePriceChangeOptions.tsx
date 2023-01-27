@@ -2,6 +2,10 @@ export const usePriceChangeOptions = (priceChangePercentage: number): [string, b
     let priceChangeNegBool: boolean = false;
     let priceChangePercentageFormatted: string;
 
+    if (priceChangePercentage === null) {
+        return ['0.00', priceChangeNegBool];
+    }
+
     if (priceChangePercentage < 0) {
         priceChangeNegBool = true;
         priceChangePercentage = Math.abs(priceChangePercentage);

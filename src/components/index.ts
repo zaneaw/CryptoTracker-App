@@ -1,4 +1,2 @@
-export * from './CoinList';
-export * from './CoinListHeader';
-export * from './CoinListItem';
-export * from './ToggleTheme';
+export * from './coin-list-components';
+export * from './reusable-components';

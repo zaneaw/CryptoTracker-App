@@ -12,7 +12,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { usePriceChangeOptions } from '../Hooks';
 import { RootStackParamList } from '../routes';
-import { PriceChangePercentageDisplay } from '../components/mini-components';
+import { PriceChangePercentageDisplay } from '../components/reusable-components';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>;
 

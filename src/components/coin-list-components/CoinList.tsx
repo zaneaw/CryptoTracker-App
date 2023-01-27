@@ -5,16 +5,17 @@ import {
     ListRenderItem,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '../../theme/ThemeProvider';
+import { useTheme } from '../../../theme/ThemeProvider';
 
-import { CoinValidator } from '../Validators/CoinValidator';
-import { CoinListItem, CoinListHeader } from './index';
+import { CoinValidator } from '../../Validators/CoinValidator';
+import { CoinListItem, CoinListHeader } from '../index';
 
-import coinData from '../../exampleApi';
+import coinData from '../../../exampleApi';
 
 export const CoinList = () => {
     const { colors } = useTheme();
     const [coins, setCoins] = useState<CoinValidator[]>([]);
+    const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [sortBy, setSortBy] = useState<string>('num');
     const [sortByNumReverse, setSortByNumReverse] = useState<boolean>(false);
     const [sortByMarketCapReverse, setSortByMarketCapReverse] =
@@ -79,9 +80,13 @@ export const CoinList = () => {
                 return bNum - aNum;
             }),
         );
+
+        setIsUpdating(false);
     };
 
     const reverseNumClick = (): void => {
+        setIsUpdating(true);
+
         if (sortBy !== 'num') {
             if (sortBy !== 'marketCap') {
                 coinSorter(true, 'marketCap');
@@ -95,6 +100,8 @@ export const CoinList = () => {
     };
 
     const reverseMarketCapClick = (): void => {
+        setIsUpdating(true);
+
         if (sortBy !== 'marketCap') {
             if (sortBy !== 'num') {
                 coinSorter(true, 'marketCap');
@@ -111,6 +118,8 @@ export const CoinList = () => {
     };
 
     const reversePriceClick = (): void => {
+        setIsUpdating(true);
+
         if (sortBy !== 'price') {
             newSortClick();
             setSortBy('price');
@@ -122,6 +131,8 @@ export const CoinList = () => {
     };
 
     const reverseChangeClick = (): void => {
+        setIsUpdating(true);
+
         if (sortBy !== 'change') {
             newSortClick();
             setSortBy('change');
@@ -150,6 +161,14 @@ export const CoinList = () => {
 
     return (
         <View>
+            {isUpdating ? (
+                    <ActivityIndicator
+                        size="large"
+                        color={colors.primary}
+                    />
+                ) : (
+                    undefined
+            )}
             {coins ? (
                 <FlatList
                     data={coins}

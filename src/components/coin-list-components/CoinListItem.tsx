@@ -2,12 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
-import { useTheme } from '../../theme/ThemeProvider';
+import { useTheme } from '../../../theme/ThemeProvider';
 
-import { useLargeNumFormatter, usePriceChangeOptions } from '../Hooks';
-import { CoinValidator } from '../Validators/CoinValidator';
-import { RootStackParamList } from '../routes';
-import { PriceChangePercentageDisplay } from './mini-components';
+import { useLargeNumFormatter } from '../../Hooks';
+import { CoinValidator } from '../../Validators/CoinValidator';
+import { RootStackParamList } from '../../routes';
+import { PriceChangePercentageDisplay } from '../reusable-components';
 
 type Props = {
     item: CoinValidator;

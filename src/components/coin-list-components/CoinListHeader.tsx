@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { useTheme } from '../../theme/ThemeProvider';
+import { useTheme } from '../../../theme/ThemeProvider';
 import Icon from 'react-native-vector-icons/Feather';
 
 type Props = {

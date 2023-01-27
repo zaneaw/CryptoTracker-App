@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 import React from 'react';
 import { useTheme } from '../../theme/ThemeProvider';
 
-import { ToggleTheme } from '../components';
+import { ToggleTheme } from '../components/reusable-components';
 
 export const SettingsScreen: React.FC = () => {
     const { colors } = useTheme();
