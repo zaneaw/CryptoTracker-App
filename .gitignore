@@ -1,3 +1,10 @@
+#
+# Example Files
+#
+exampleApi.js
+singleCoinApi.json
+
+# ===== DEFAULTS BELOW =====
 # OSX
 #
 .DS_Store
