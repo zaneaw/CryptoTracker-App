@@ -4,7 +4,7 @@ import {
     ActivityIndicator,
     ListRenderItem,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTheme } from '../../../theme/ThemeProvider';
 
 import { CoinValidator } from '../../Validators/CoinValidator';
@@ -52,8 +52,8 @@ export const CoinList = () => {
     };
 
     const coinSorter = (reverse: boolean, sorter: string) => {
-        setCoins(coins =>
-            coins.sort((a, b) => {
+        setCoins((coins: CoinValidator[]) =>
+            coins.sort((a: CoinValidator, b: CoinValidator) => {
                 let aNum!: number;
                 let bNum!: number;
 
@@ -95,7 +95,7 @@ export const CoinList = () => {
             setSortBy('num');
             return;
         }
-        setSortByNumReverse(sortByNumReverse => !sortByNumReverse);
+        setSortByNumReverse((sortByNumReverse: boolean) => !sortByNumReverse);
         coinSorter(sortByNumReverse, 'marketCap');
     };
 
@@ -112,7 +112,7 @@ export const CoinList = () => {
             return;
         }
         setSortByMarketCapReverse(
-            sortByMarketCapReverse => !sortByMarketCapReverse,
+            (sortByMarketCapReverse: boolean) => !sortByMarketCapReverse,
         );
         coinSorter(sortByMarketCapReverse, 'marketCap');
     };
@@ -125,7 +125,7 @@ export const CoinList = () => {
             setSortBy('price');
             coinSorter(false, 'price');
         }
-        setSortByPriceReverse(sortByPriceReverse => !sortByPriceReverse);
+        setSortByPriceReverse((sortByPriceReverse: boolean) => !sortByPriceReverse);
 
         coinSorter(sortByPriceReverse, 'price');
     };
@@ -138,7 +138,7 @@ export const CoinList = () => {
             setSortBy('change');
             coinSorter(false, 'change');
         }
-        setSortByChangeReverse(sortByChangeReverse => !sortByChangeReverse);
+        setSortByChangeReverse((sortByChangeReverse: boolean) => !sortByChangeReverse);
         coinSorter(sortByChangeReverse, 'change');
     };
 
@@ -173,7 +173,7 @@ export const CoinList = () => {
                 <FlatList
                     data={coins}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item: CoinValidator) => item.id}
                     ListHeaderComponent={
                         <CoinListHeader
                             sortBy={sortBy}
