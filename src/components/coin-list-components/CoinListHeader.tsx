@@ -9,7 +9,7 @@ type Props = {
     reverseSort: boolean;
 };
 
-export const CoinListHeader: React.FC<Props> = ({
+export const CoinListHeader: React.FC<Props> = React.memo(({
     sortBy,
     clickSortOption,
     reverseSort,
@@ -85,7 +85,7 @@ export const CoinListHeader: React.FC<Props> = ({
             </TouchableOpacity>
         </View>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container: {
