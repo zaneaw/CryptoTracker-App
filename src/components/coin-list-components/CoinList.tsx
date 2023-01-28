@@ -3,6 +3,7 @@ import {
     FlatList,
     ActivityIndicator,
     ListRenderItem,
+    RefreshControl,
 } from 'react-native';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTheme } from '../../../theme/ThemeProvider';
@@ -15,6 +16,7 @@ export const CoinList = () => {
     const [coins, setCoins] = useState<CoinValidator[]>([]);
     const [sortBy, setSortBy] = useState<string>('num');
     const [reverseSort, setReverseSort] = useState<boolean>(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const numChecker = (num: number): number => {
         let numToString: string = String(num);
@@ -78,11 +80,14 @@ export const CoinList = () => {
     );
 
     const getCoins = () => {
+        setIsRefreshing(true);
+
         fetch(
             'https://zanes-crypto-tracker-server.cyclic.app/api/get-all-coins',
         )
             .then(res => res.json())
             .then(json => setCoins(json))
+            .then(() => setIsRefreshing(false))
             .catch(err => console.error(err));
     };
 
@@ -113,6 +118,12 @@ export const CoinList = () => {
                         );
                     }}
                     stickyHeaderIndices={[0]}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isRefreshing}
+                            onRefresh={getCoins}
+                        />
+                    }
                 />
             ) : null}
         </View>
