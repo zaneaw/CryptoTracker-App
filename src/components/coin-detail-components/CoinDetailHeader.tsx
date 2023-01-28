@@ -11,7 +11,7 @@ type Props = {
     coinPriceChange: number;
 };
 
-export const CoinDetailHeader: React.FC<Props> = ({
+export const CoinDetailHeader: React.FC<Props> = React.memo(({
     coinSymbol,
     coinCurrentPrice,
     coinPriceChange,
@@ -32,7 +32,7 @@ export const CoinDetailHeader: React.FC<Props> = ({
             <PriceChangePercentageDisplay priceChangeAmount={coinPriceChange} />
         </View>
     );
-};
+});
 
 const styles = StyleSheet.create({
     topInfo: {
