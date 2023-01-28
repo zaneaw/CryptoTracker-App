@@ -1,8 +1,8 @@
 #
 # Example Files
 #
-exampleApi.js
-singleCoinApi.json
+exampleAllCoinsAPI.json
+exampleSingleCoinApi.json
 
 # ===== DEFAULTS BELOW =====
 # OSX
