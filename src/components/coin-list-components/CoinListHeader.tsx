@@ -5,67 +5,51 @@ import Icon from 'react-native-vector-icons/Feather';
 
 type Props = {
     sortBy: string;
-    sortByNumReverse: boolean;
-    sortByMarketCapReverse: boolean;
-    sortByPriceReverse: boolean;
-    sortByChangeReverse: boolean;
-    reverseNumClick: () => void;
-    reverseMarketCapClick: () => void;
-    reversePriceClick: () => void;
-    reverseChangeClick: () => void;
+    clickSortOption: (option: string) => void;
+    reverseSort: boolean;
 };
 
-export const CoinListHeader: React.FC<Props> = ({
+export const CoinListHeader: React.FC<Props> = React.memo(({
     sortBy,
-    sortByNumReverse,
-    sortByMarketCapReverse,
-    sortByPriceReverse,
-    sortByChangeReverse,
-    reverseNumClick,
-    reverseMarketCapClick,
-    reversePriceClick,
-    reverseChangeClick,
+    clickSortOption,
+    reverseSort,
 }) => {
     const { colors } = useTheme();
 
     return (
         <View
             style={[styles.container, { backgroundColor: colors.background }]}>
-            <TouchableOpacity style={styles.number} onPress={reverseNumClick}>
+            <TouchableOpacity
+                style={styles.number}
+                onPress={() => clickSortOption('num')}>
                 <Text style={[styles.headerText, { color: colors.flipText }]}>
                     #
                 </Text>
                 {sortBy === 'num' ? (
                     <Icon
-                        name={sortByNumReverse ? 'chevron-up' : 'chevron-down'}
+                        name={reverseSort ? 'chevron-down' : 'chevron-up'}
                         size={15}
                         color={colors.flipText}
                     />
-                ) : (
-                    ''
-                )}
+                ) : undefined}
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.marketCap}
-                onPress={reverseMarketCapClick}>
+                onPress={() => clickSortOption('marketCap')}>
                 <Text style={[styles.headerText, { color: colors.flipText }]}>
                     Market Cap
                 </Text>
                 {sortBy === 'marketCap' ? (
                     <Icon
-                        name={
-                            sortByMarketCapReverse
-                                ? 'chevron-up'
-                                : 'chevron-down'
-                        }
+                        name={reverseSort ? 'chevron-down' : 'chevron-up'}
                         size={15}
                         color={colors.flipText}
                     />
-                ) : (
-                    ''
-                )}
+                ) : undefined}
             </TouchableOpacity>
-            <TouchableOpacity style={styles.price} onPress={reversePriceClick}>
+            <TouchableOpacity
+                style={styles.price}
+                onPress={() => clickSortOption('price')}>
                 <View style={styles.priceSmallContainer}>
                     <Text
                         style={[styles.headerText, { color: colors.flipText }]}>
@@ -74,46 +58,34 @@ export const CoinListHeader: React.FC<Props> = ({
                     {sortBy === 'price' ? (
                         <Icon
                             style={styles.priceIcon}
-                            name={
-                                !sortByPriceReverse
-                                    ? 'chevron-up'
-                                    : 'chevron-down'
-                            }
+                            name={reverseSort ? 'chevron-down' : 'chevron-up'}
                             size={15}
                             color={colors.flipText}
                         />
-                    ) : (
-                        ''
-                    )}
+                    ) : undefined}
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.change}
-                onPress={reverseChangeClick}>
+                onPress={() => clickSortOption('changePercentage')}>
                 <View style={styles.changeSmallContainer}>
                     <Text
                         style={[styles.headerText, { color: colors.flipText }]}>
                         Change
                     </Text>
-                    {sortBy === 'change' ? (
+                    {sortBy === 'changePercentage' ? (
                         <Icon
                             style={styles.changeIcon}
-                            name={
-                                !sortByChangeReverse
-                                    ? 'chevron-up'
-                                    : 'chevron-down'
-                            }
+                            name={reverseSort ? 'chevron-down' : 'chevron-up'}
                             size={15}
                             color={colors.flipText}
                         />
-                    ) : (
-                        ''
-                    )}
+                    ) : undefined}
                 </View>
             </TouchableOpacity>
         </View>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container: {
