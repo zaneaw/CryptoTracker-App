@@ -5,12 +5,12 @@ import {
     Text,
     StyleSheet,
     ActivityIndicator,
+    RefreshControl,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../theme/ThemeProvider';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { usePriceChangeOptions } from '../Hooks';
 import { RootStackParamList } from '../routes';
 import { CoinDetailHeader } from '../components/coin-detail-components';
 
@@ -22,18 +22,16 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
     const [coinData, setCoinData] = useState<any>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const getCoinData = async () => {
-        try {
-            const response = await fetch(
-                `https://zanes-crypto-tracker-server.cyclic.app/api/get-single-coin/${coinId}`,
-            );
-            const json = await response.json();
-            setCoinData(json);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            return setIsLoading(false)
-        }
+    const getCoinData = () => {
+        setIsLoading(true);
+
+        fetch(
+            `https://zanes-crypto-tracker-server.cyclic.app/api/get-single-coin/${coinId}`,
+        )
+            .then(res => res.json())
+            .then(json => setCoinData(json))
+            .then(() => setIsLoading(false))
+            .catch(err => console.error(err));
     };
 
     useEffect(() => {
@@ -50,11 +48,21 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                     style={[
                         styles.body,
                         { backgroundColor: colors.background },
-                    ]}>
+                    ]}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isLoading}
+                            onRefresh={getCoinData}
+                        />
+                    }>
                     <CoinDetailHeader
                         coinSymbol={coinData.symbol}
-                        coinCurrentPrice={coinData.market_data.current_price.usd}
-                        coinPriceChange={coinData.market_data.price_change_percentage_24h}
+                        coinCurrentPrice={
+                            coinData.market_data.current_price.usd
+                        }
+                        coinPriceChange={
+                            coinData.market_data.price_change_percentage_24h
+                        }
                     />
                 </ScrollView>
             )}
