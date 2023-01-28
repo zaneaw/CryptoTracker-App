@@ -12,7 +12,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { usePriceChangeOptions } from '../Hooks';
 import { RootStackParamList } from '../routes';
-import { PriceChangePercentageDisplay } from '../components/reusable-components';
+import { CoinDetailHeader } from '../components/coin-detail-components';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>;
 
@@ -51,17 +51,11 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                         styles.body,
                         { backgroundColor: colors.background },
                     ]}>
-                    <View style={styles.topInfo}>
-                        <View style={styles.topLeft}>
-                            <Text style={[styles.headerText, { color: colors.flipText }]}>
-                                {coinData.symbol.toUpperCase()}
-                            </Text>
-                            <Text style={[styles.headerText, {color: colors.flipText}]}>
-                                {new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(coinData.market_data.current_price.usd)}
-                            </Text>
-                        </View>
-                        <PriceChangePercentageDisplay priceChangeAmount={coinData.market_data.price_change_percentage_24h} />
-                    </View>
+                    <CoinDetailHeader
+                        coinSymbol={coinData.symbol}
+                        coinCurrentPrice={coinData.market_data.current_price.usd}
+                        coinPriceChange={coinData.market_data.price_change_percentage_24h}
+                    />
                 </ScrollView>
             )}
         </SafeAreaView>
@@ -79,16 +73,5 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 12,
         paddingVertical: 4,
-    },
-    topInfo: {
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    topLeft: {},
-    headerText: {
-        fontSize: 16,
-        fontWeight: 'bold',
     },
 });
