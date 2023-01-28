@@ -12,7 +12,7 @@ import { useTheme } from '../../theme/ThemeProvider';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '../routes';
-import { CoinDetailHeader } from '../components/coin-detail-components';
+import { CoinDetailGraph, CoinDetailHeader } from '../components/coin-detail-components';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>;
 
@@ -64,6 +64,8 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                             coinData.market_data.price_change_percentage_24h
                         }
                     />
+                    {/* Display a tab navigation here for news, currency repos, etc */}
+                    <CoinDetailGraph />
                 </ScrollView>
             )}
         </SafeAreaView>
