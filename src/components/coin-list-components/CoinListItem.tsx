@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import { useTheme } from '../../../theme/ThemeProvider';
 
-import { useLargeNumFormatter } from '../../Hooks';
+import { useCurrentPriceFormatter, useLargeNumFormatter } from '../../Hooks';
 import { CoinValidator } from '../../Validators/CoinValidator';
 import { RootStackParamList } from '../../routes';
 import { PriceChangePercentageDisplay } from '../reusable-components';
@@ -16,6 +16,7 @@ type Props = {
 export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const { colors } = useTheme();
+    const coinCurrentPrice = useCurrentPriceFormatter(item.current_price);
 
     // let coinImage: string = item.image.replace('large', 'small');
     let marketCap: string | number = item.market_cap;
@@ -25,19 +26,8 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
         marketCap = useLargeNumFormatter(marketCap);
     }
 
-    if (String(currPrice).includes('e')) {
-        currPrice = String(currPrice).split('e')[0];
-        currPrice = Number(currPrice);
-    }
 
-    if (currPrice > 0.01) {
-        currPrice = Number(currPrice).toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
-    } else {
-        currPrice = Number(currPrice).toFixed(8);
-    }
+        
 
     const onPressCoinDetail = () => {
         navigation.navigate('CoinDetail', { coinId: item.id });
@@ -80,7 +70,7 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
                         styles.textSize,
                         { color: colors.flipText },
                     ]}>
-                    ${currPrice}
+                    ${coinCurrentPrice}
                 </Text>
             </View>
             <View style={styles.changeContainer}>
