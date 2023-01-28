@@ -4,7 +4,7 @@ import {
     ActivityIndicator,
     ListRenderItem,
 } from 'react-native';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTheme } from '../../../theme/ThemeProvider';
 
 import { CoinValidator } from '../../Validators/CoinValidator';
@@ -13,16 +13,8 @@ import { CoinListItem, CoinListHeader } from '../index';
 export const CoinList = () => {
     const { colors } = useTheme();
     const [coins, setCoins] = useState<CoinValidator[]>([]);
-    const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [sortBy, setSortBy] = useState<string>('num');
     const [reverseSort, setReverseSort] = useState<boolean>(false);
-    // const [sortByNumReverse, setSortByNumReverse] = useState<boolean>(false);
-    // const [sortByMarketCapReverse, setSortByMarketCapReverse] =
-    //     useState<boolean>(false);
-    // const [sortByPriceReverse, setSortByPriceReverse] =
-    //     useState<boolean>(false);
-    // const [sortByChangeReverse, setSortByChangeReverse] =
-    //     useState<boolean>(false);
 
     const numChecker = (num: number): number => {
         let numToString: string = String(num);
@@ -34,8 +26,8 @@ export const CoinList = () => {
         return num;
     };
 
-    useMemo(() => {
-        const newCoins = coins.sort((a: CoinValidator, b: CoinValidator) => {
+    const coinsSorted = useMemo(() => {
+        return coins.sort((a: CoinValidator, b: CoinValidator) => {
             let aNum!: number;
             let bNum!: number;
 
@@ -67,12 +59,9 @@ export const CoinList = () => {
 
             return bNum - aNum;
         });
+    }, [sortBy, reverseSort, coins]);
 
-        setCoins(newCoins);
-        setIsUpdating(false);
-    }, [sortBy, reverseSort]);
-
-    const clickSortOption = (option: string) => {
+    const clickSortOption = useCallback((option: string) => {
         if (sortBy === option) {
             if (reverseSort) {
                 return setReverseSort(false);
@@ -82,7 +71,7 @@ export const CoinList = () => {
 
         setSortBy(option);
         setReverseSort(false);
-    };
+    }, [sortBy, setSortBy, reverseSort, setReverseSort]);
 
     const renderItem: ListRenderItem<CoinValidator> = ({ item }) => (
         <CoinListItem key={item.id} item={item} />
@@ -103,12 +92,9 @@ export const CoinList = () => {
 
     return (
         <View>
-            {isUpdating ? (
-                <ActivityIndicator size="large" color={colors.primary} />
-            ) : undefined}
             {coins ? (
                 <FlatList
-                    data={coins}
+                    data={coinsSorted}
                     renderItem={renderItem}
                     keyExtractor={(item: CoinValidator) => item.id}
                     ListHeaderComponent={
@@ -116,14 +102,6 @@ export const CoinList = () => {
                             sortBy={sortBy}
                             clickSortOption={clickSortOption}
                             reverseSort={reverseSort}
-                            // sortByNumReverse={sortByNumReverse}
-                            // sortByMarketCapReverse={sortByMarketCapReverse}
-                            // sortByPriceReverse={sortByPriceReverse}
-                            // sortByChangeReverse={sortByChangeReverse}
-                            // reverseNumClick={reverseNumClick}
-                            // reverseMarketCapClick={reverseMarketCapClick}
-                            // reversePriceClick={reversePriceClick}
-                            // reverseChangeClick={reverseChangeClick}
                         />
                     }
                     ListEmptyComponent={() => {
