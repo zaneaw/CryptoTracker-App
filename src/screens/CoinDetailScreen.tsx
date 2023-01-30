@@ -20,6 +20,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
     const { colors } = useTheme();
     const { coinId } = route.params;
     const [coinData, setCoinData] = useState<any>([]);
+    const [coinGraphData, setCoinGraphData] = useState<number[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const getCoinData = () => {
@@ -30,7 +31,17 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
         )
             .then(res => res.json())
             .then(json => setCoinData(json))
+            .then(() => getCoinGraphData())
             .then(() => setIsLoading(false))
+            .catch(err => console.error(err));
+    };
+
+    const getCoinGraphData = () => {
+        fetch(
+            `https://zanes-crypto-tracker-server.cyclic.app/api/get-single-coin-ohlc/${coinId}`,
+        )
+            .then(res => res.json())
+            .then(json => setCoinGraphData(json))
             .catch(err => console.error(err));
     };
 
@@ -65,7 +76,11 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                         }
                     />
                     {/* Display a tab navigation here for news, currency repos, etc */}
-                    <CoinDetailGraph />
+                    <CoinDetailGraph coinGraphData={coinGraphData} />
+                    {/* <Text>
+                        {JSON.stringify(coinGraphData)}
+                        Hello
+                    </Text> */}
                 </ScrollView>
             )}
         </SafeAreaView>
@@ -81,7 +96,6 @@ const styles = StyleSheet.create({
     },
     body: {
         width: '100%',
-        paddingHorizontal: 12,
         paddingVertical: 4,
     },
 });

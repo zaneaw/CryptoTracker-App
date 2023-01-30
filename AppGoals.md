@@ -1,8 +1,8 @@
 # App Goals #
 
 ### **_TODOs:_**
-* handler for 0% price change!!!!
-* on Number or MarketCap sort, reset coins to sort by marketCapRank
+* handler for 0% price change!
+* place currency for API calls in context
 
 
 ### **_Create UI/UX for:_**

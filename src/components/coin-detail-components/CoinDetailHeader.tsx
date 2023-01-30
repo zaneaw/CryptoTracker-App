@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingHorizontal: 12,
     },
     topLeft: {},
     headerText: {
