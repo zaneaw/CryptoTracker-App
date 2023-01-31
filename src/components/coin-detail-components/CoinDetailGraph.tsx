@@ -2,17 +2,22 @@ import { Dimensions, View } from 'react-native';
 import React from 'react';
 import { LineChart } from 'react-native-chart-kit';
 
+import { useTheme } from '../../../theme/ThemeProvider';
 import { usePriceFormatter } from '../../Hooks';
 
 type Props = {
     graphLabels: string[];
     graphPoints: number[];
+    priceChange: number;
 };
 
 export const CoinDetailGraph: React.FC<Props> = ({
     graphLabels,
     graphPoints,
+    priceChange,
 }) => {
+    const { colors, isDark } = useTheme();
+
     return (
         <View>
             <LineChart
@@ -32,18 +37,19 @@ export const CoinDetailGraph: React.FC<Props> = ({
                 yAxisLabel="$"
                 yAxisInterval={1000} // setting high to avoid vertical lines from appearing
                 chartConfig={{
-                    backgroundColor: '#e26a00',
-                    // backgroundGradientTo: '#ffa726',
+                    backgroundColor: colors.background,
+                    backgroundGradientFromOpacity: 0,
+                    backgroundGradientToOpacity: 0,
                     // decimalPlaces: (graphPoints[graphPoints.length - 1] > 999 ? 0 : 2), // helps with space, not needed now?
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    labelColor: (opacity = 1) =>
-                        `rgba(255, 255, 255, ${opacity})`,
+                    color: () => (priceChange >= 0 ? (
+                        isDark ? '#90EE90' : 'green') : (isDark ? '#FFCCCB' : 'red')),
+                    labelColor: () => colors.flipText,
                 }}
                 formatYLabel={(yValue: string) => {
                     return usePriceFormatter(yValue, true);
                 }}
                 style={{
-                    marginVertical: 8,
+                    marginVertical: 24,
                     borderRadius: 16,
                 }}
             />

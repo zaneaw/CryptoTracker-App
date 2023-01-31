@@ -104,7 +104,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                         }
                     />
                     {/* Display a tab navigation here for news, currency repos, etc */}
-                    <CoinDetailGraph graphLabels={graphLabels} graphPoints={graphPoints} />
+                    <CoinDetailGraph graphLabels={graphLabels} graphPoints={graphPoints} priceChange={coinData.market_data.price_change_percentage_24h} />
                 </ScrollView>
             )}
         </SafeAreaView>
