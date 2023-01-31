@@ -4,8 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from '../theme/ThemeProvider';
 import { HomeScreen, CoinDetailScreen, SettingsScreen } from './screens';
 import { Stack } from './routes';
-import Icon from 'react-native-vector-icons/Feather';
-import { TouchableOpacity } from 'react-native';
+import { HeaderRight } from './components/reusable-components';
 
 export const App = () => {
     return (
@@ -21,18 +20,7 @@ export const App = () => {
                         component={HomeScreen}
                         options={({ navigation }) => ({
                             title: 'Crypto Tracker',
-                            headerRight: () => (
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        navigation.navigate('Settings')
-                                    }>
-                                    <Icon
-                                        name="settings"
-                                        size={15}
-                                        color="#2D3142"
-                                    />
-                                </TouchableOpacity>
-                            ),
+                            headerRight: () => <HeaderRight />,
                         })}
                     />
                     <Stack.Screen
@@ -40,18 +28,7 @@ export const App = () => {
                         component={CoinDetailScreen}
                         options={({ route, navigation }) => ({
                             title: route.params.coinId.toUpperCase(),
-                            headerRight: () => (
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        navigation.navigate('Settings')
-                                    }>
-                                    <Icon
-                                        name="settings"
-                                        size={15}
-                                        color="#2D3142"
-                                    />
-                                </TouchableOpacity>
-                            ),
+                            headerRight: () => <HeaderRight />,
                         })}
                     />
                     <Stack.Screen
