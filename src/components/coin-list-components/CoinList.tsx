@@ -1,9 +1,12 @@
 import {
     View,
+    Text,
     FlatList,
     ActivityIndicator,
     ListRenderItem,
     RefreshControl,
+    StyleSheet,
+    Button,
 } from 'react-native';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTheme } from '../../../theme/ThemeProvider';
@@ -28,7 +31,11 @@ export const CoinList = () => {
         return num;
     };
 
-    const coinsSorted = useMemo(() => {
+    const coinsSorted = useMemo((): null | CoinValidator[] => {
+        if (!coins.length) {
+            return null;
+        }
+
         return coins.sort((a: CoinValidator, b: CoinValidator) => {
             let aNum!: number;
             let bNum!: number;
@@ -63,17 +70,20 @@ export const CoinList = () => {
         });
     }, [sortBy, reverseSort, coins]);
 
-    const clickSortOption = useCallback((option: string) => {
-        if (sortBy === option) {
-            if (reverseSort) {
-                return setReverseSort(false);
+    const clickSortOption = useCallback(
+        (option: string) => {
+            if (sortBy === option) {
+                if (reverseSort) {
+                    return setReverseSort(false);
+                }
+                return setReverseSort(true);
             }
-            return setReverseSort(true);
-        }
 
-        setSortBy(option);
-        setReverseSort(false);
-    }, [sortBy, setSortBy, reverseSort, setReverseSort]);
+            setSortBy(option);
+            setReverseSort(false);
+        },
+        [sortBy, setSortBy, reverseSort, setReverseSort],
+    );
 
     const renderItem: ListRenderItem<CoinValidator> = ({ item }) => (
         <CoinListItem key={item.id} item={item} />
@@ -82,13 +92,11 @@ export const CoinList = () => {
     const getCoins = () => {
         setIsRefreshing(true);
 
-        fetch(
-            'https://zanes-crypto-tracker-server.cyclic.app/api/get-all-coins',
-        )
+        fetch('https://zanes-crypto-tracker-server.cyclic.app/api/get-all-coins')
             .then(res => res.json())
             .then(json => setCoins(json))
             .then(() => setIsRefreshing(false))
-            .catch(err => console.error(err));
+            .catch(err => (console.error(err), setIsRefreshing(false)));
     };
 
     useEffect(() => {
@@ -97,7 +105,7 @@ export const CoinList = () => {
 
     return (
         <View>
-            {coins ? (
+            {coins.length ? (
                 <FlatList
                     data={coinsSorted}
                     renderItem={renderItem}
@@ -125,7 +133,29 @@ export const CoinList = () => {
                         />
                     }
                 />
+            ) : (
+                <View style={styles.failedView}>
+                    <Text>
+                        Failed to fetch Crypto data. Please try again later.
+                    </Text>
+                    <Button
+                        title="Try Again"
+                        onPress={getCoins}
+                        accessibilityLabel="Try refreshing the app"
+                    />
+                </View>
+            )}
+            {isRefreshing ? (
+                <ActivityIndicator size="large" color={colors.primary} />
             ) : null}
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    failedView: {
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
