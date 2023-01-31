@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import { useTheme } from '../../../theme/ThemeProvider';
 
-import { useCurrentPriceFormatter, useLargeNumFormatter } from '../../Hooks';
+import { usePriceFormatter, useLargeNumFormatter } from '../../Hooks';
 import { CoinValidator } from '../../Validators/CoinValidator';
 import { RootStackParamList } from '../../routes';
 import { PriceChangePercentageDisplay } from '../reusable-components';
@@ -16,7 +16,7 @@ type Props = {
 export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const { colors } = useTheme();
-    const coinCurrentPrice = useCurrentPriceFormatter(item.current_price);
+    const coinCurrentPrice = usePriceFormatter(item.current_price);
 
     // let coinImage: string = item.image.replace('large', 'small');
     let marketCap: string | number = item.market_cap;
