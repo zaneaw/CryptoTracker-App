@@ -20,14 +20,11 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
 
     // let coinImage: string = item.image.replace('large', 'small');
     let marketCap: string | number = item.market_cap;
-    let currPrice: string | number = item.current_price;
+    // let currPrice: string | number = item.current_price;
 
     if (marketCap > 0.01) {
         marketCap = useLargeNumFormatter(marketCap);
     }
-
-
-        
 
     const onPressCoinDetail = () => {
         navigation.navigate('CoinDetail', { coinId: item.id });
