@@ -12,7 +12,10 @@ import { useTheme } from '../../theme/ThemeProvider';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '../routes';
-import { CoinDetailGraph, CoinDetailHeader } from '../components/coin-detail-components';
+import {
+    CoinDetailGraph,
+    CoinDetailHeader,
+} from '../components/coin-detail-components';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>;
 
@@ -20,8 +23,9 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
     const { colors } = useTheme();
     const { coinId } = route.params;
     const [coinData, setCoinData] = useState<any>([]);
-    const [coinGraphData, setCoinGraphData] = useState<number[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [graphLabels, setGraphLabels] = useState<string[]>([]);
+    const [graphPoints, setGraphPoints] = useState<number[]>([]);
 
     const getCoinData = () => {
         setIsLoading(true);
@@ -32,6 +36,9 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
             .then(res => res.json())
             .then(json => setCoinData(json))
             .then(() => getCoinGraphData())
+            .then(() => {
+                
+            })
             .then(() => setIsLoading(false))
             .catch(err => console.error(err));
     };
@@ -41,9 +48,30 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
             `https://zanes-crypto-tracker-server.cyclic.app/api/get-single-coin-ohlc/${coinId}`,
         )
             .then(res => res.json())
-            .then(json => setCoinGraphData(json))
+            .then(json => cleanGraphData(json))
             .catch(err => console.error(err));
     };
+
+    const cleanGraphData = (json: number[][]) => {
+        let currTimestamps = [];
+        let currPointsOpen = [];
+
+        for (let i = 0; i < json.length; i++) {
+            if (Math.floor(json.length / 4) % i === 0) {
+                let date = new Date(json[i][0]);
+                let hours = date.getHours();
+                let minutes = '0' + date.getMinutes();
+                let dateStr = `${hours}:${minutes.substr(-2)}`;
+                currTimestamps.push(dateStr);
+            }
+            currPointsOpen.push(json[i][1]);
+            // graphPointsClose.push(json[i][4]);
+        }
+
+        setGraphLabels(currTimestamps);
+        setGraphPoints(currPointsOpen);
+        return;
+    }
 
     useEffect(() => {
         getCoinData();
@@ -76,11 +104,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                         }
                     />
                     {/* Display a tab navigation here for news, currency repos, etc */}
-                    <CoinDetailGraph coinGraphData={coinGraphData} />
-                    {/* <Text>
-                        {JSON.stringify(coinGraphData)}
-                        Hello
-                    </Text> */}
+                    <CoinDetailGraph graphLabels={graphLabels} graphPoints={graphPoints} />
                 </ScrollView>
             )}
         </SafeAreaView>

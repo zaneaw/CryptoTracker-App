@@ -1,56 +1,46 @@
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import React from 'react';
-
 import { LineChart } from 'react-native-chart-kit';
 
+import { usePriceFormatter } from '../../Hooks';
+
 type Props = {
-    coinGraphData: number[][];
+    graphLabels: string[];
+    graphPoints: number[];
 };
 
-export const CoinDetailGraph: React.FC<Props> = ({ coinGraphData }) => {
-    let timestamps: string[] = [];
-    let graphPointsOpen: number[] = [];
-    let graphPointsClose: number[] = [];
-    const dataLength = coinGraphData.length;
-    const graphLabelMath = Math.floor(dataLength / 4);
-
-    for (let i = 0; i < dataLength; i++) {
-        if (graphLabelMath % i === 0) {
-            let date = new Date(coinGraphData[i][0]);
-            let hours = date.getHours();
-            let minutes = "0" + date.getMinutes();
-            let dateStr = `${hours}:${minutes.substr(-2)}`
-            console.log(dateStr)
-            timestamps.push(dateStr);
-        }
-        graphPointsOpen.push(coinGraphData[i][1]);
-        graphPointsClose.push(coinGraphData[i][4]);
-    }
-
+export const CoinDetailGraph: React.FC<Props> = ({
+    graphLabels,
+    graphPoints,
+}) => {
     return (
         <View>
             <LineChart
                 data={{
-                    labels: timestamps,
+                    labels: graphLabels,
                     datasets: [
                         {
-                            data: graphPointsOpen,
+                            data: (graphPoints.length !== 0 ? graphPoints : [0, 0, 0, 0, 0, 0, 0, 0]),
                         },
                     ],
                 }}
-                width={Dimensions.get('window').width} // from react-native
+                width={Dimensions.get('window').width}
                 height={300}
                 withDots={false}
+                withShadow={false}
+                xAxisLabel=""
                 yAxisLabel="$"
-                yAxisInterval={100} // optional, defaults to 1
+                yAxisInterval={1000} // setting high to avoid vertical lines from appearing
                 chartConfig={{
                     backgroundColor: '#e26a00',
-                    backgroundGradientFrom: '#fb8c00',
-                    backgroundGradientTo: '#ffa726',
-                    decimalPlaces: 2, // optional, defaults to 2dp
+                    // backgroundGradientTo: '#ffa726',
+                    // decimalPlaces: (graphPoints[graphPoints.length - 1] > 999 ? 0 : 2), // helps with space, not needed now?
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) =>
                         `rgba(255, 255, 255, ${opacity})`,
+                }}
+                formatYLabel={(yValue: string) => {
+                    return usePriceFormatter(yValue, true);
                 }}
                 style={{
                     marginVertical: 8,
@@ -61,4 +51,4 @@ export const CoinDetailGraph: React.FC<Props> = ({ coinGraphData }) => {
     );
 };
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});
