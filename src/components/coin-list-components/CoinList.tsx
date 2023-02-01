@@ -20,6 +20,7 @@ export const CoinList = () => {
     const [sortBy, setSortBy] = useState<string>('num');
     const [reverseSort, setReverseSort] = useState<boolean>(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const [isError, setIsError] = useState<boolean>(false);
 
     const numChecker = (num: number): number => {
         let numToString: string = String(num);
@@ -92,11 +93,17 @@ export const CoinList = () => {
     const getCoins = () => {
         setIsRefreshing(true);
 
-        fetch('https://zanes-crypto-tracker-server.cyclic.app/api/get-all-coins')
+        fetch(
+            'https://zanes-crypto-tracker-server.cyclic.app/api/get-all-coins',
+        )
             .then(res => res.json())
             .then(json => setCoins(json))
             .then(() => setIsRefreshing(false))
-            .catch(err => (console.error(err), setIsRefreshing(false)));
+            .catch(
+                err => (
+                    console.error(err), setIsRefreshing(false), setIsError(true)
+                ),
+            );
     };
 
     useEffect(() => {
@@ -104,7 +111,7 @@ export const CoinList = () => {
     }, []);
 
     return (
-        <View>
+        <View style={{height: '100%'}}>
             {coins.length ? (
                 <FlatList
                     data={coinsSorted}
@@ -133,9 +140,10 @@ export const CoinList = () => {
                         />
                     }
                 />
-            ) : (
+            ) : null}
+            {isError ? (
                 <View style={styles.failedView}>
-                    <Text>
+                    <Text style={{ marginBottom: 16 }}>
                         Failed to fetch Crypto data. Please try again later.
                     </Text>
                     <Button
@@ -144,7 +152,7 @@ export const CoinList = () => {
                         accessibilityLabel="Try refreshing the app"
                     />
                 </View>
-            )}
+            ) : null}
             {isRefreshing ? (
                 <ActivityIndicator size="large" color={colors.primary} />
             ) : null}
