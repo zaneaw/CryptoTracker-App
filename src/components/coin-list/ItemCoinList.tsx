@@ -2,19 +2,20 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
-import { useTheme } from '../../../theme/ThemeProvider';
 
+import { useTheme } from '../../../theme/ThemeProvider';
 import { usePriceFormatter, useLargeNumFormatter } from '../../Hooks';
 import { CoinValidator } from '../../Validators/CoinValidator';
 import { RootStackParamList } from '../../routes';
-import { PriceChangePercentageDisplay } from '../reusable-components';
+import { PriceChangePercentageDisplay } from '../reusables';
 
 type Props = {
     item: CoinValidator;
 };
 
-export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+export const ItemCoinList: React.FC<Props> = React.memo(({ item }) => {
+    const navigation =
+        useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const { colors } = useTheme();
     const coinCurrentPrice = usePriceFormatter(item.current_price);
 
@@ -71,7 +72,9 @@ export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
                 </Text>
             </View>
             <View style={styles.changeContainer}>
-                <PriceChangePercentageDisplay priceChangeAmount={item.price_change_percentage_24h} />
+                <PriceChangePercentageDisplay
+                    priceChangeAmount={item.price_change_percentage_24h}
+                />
             </View>
         </TouchableOpacity>
     );

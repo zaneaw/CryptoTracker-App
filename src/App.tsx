@@ -2,22 +2,22 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { ThemeProvider } from '../theme/ThemeProvider';
-import { HomeScreen, CoinDetailScreen, SettingsScreen } from './screens';
+import { CoinListScreen, CoinDetailScreen, SettingsScreen } from './screens';
 import { Stack } from './routes';
-import { HeaderRight } from './components/reusable-components';
+import { HeaderRight } from './components/reusables';
 
 export const App = () => {
     return (
         <ThemeProvider>
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName="Home"
+                    initialRouteName="CoinList"
                     screenOptions={{
                         headerTitleStyle: { color: '#2D3142' },
                     }}>
                     <Stack.Screen
-                        name="Home"
-                        component={HomeScreen}
+                        name="CoinList"
+                        component={CoinListScreen}
                         options={({ navigation }) => ({
                             title: 'Crypto Tracker',
                             headerRight: () => <HeaderRight />,

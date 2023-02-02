@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
-    Home: undefined;
+    CoinList: undefined;
     Settings: undefined;
     CoinDetail: {
         coinId: string;

@@ -8,14 +8,14 @@ import {
     RefreshControl,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '../../theme/ThemeProvider';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import { useTheme } from '../../theme/ThemeProvider';
 import { RootStackParamList } from '../routes';
 import {
-    CoinDetailGraphSection,
-    CoinDetailHeader,
-} from '../components/coin-detail-components';
+    GraphSectionCoinDetail,
+    HeaderCoinDetail,
+} from '../components/coin-detail';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>;
 
@@ -46,7 +46,11 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
         <SafeAreaView
             style={[styles.container, { backgroundColor: colors.background }]}>
             {isLoading ? (
-                <ActivityIndicator size="large" color={colors.primary} style={{marginVertical: 12}} />
+                <ActivityIndicator
+                    size="large"
+                    color={colors.primary}
+                    style={{ marginVertical: 12 }}
+                />
             ) : (
                 <ScrollView
                     style={[
@@ -59,7 +63,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                             onRefresh={getCoinData}
                         />
                     }>
-                    <CoinDetailHeader
+                    <HeaderCoinDetail
                         coinSymbol={coinData.symbol}
                         coinCurrentPrice={
                             coinData.market_data.current_price.usd
@@ -69,7 +73,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                         }
                     />
                     {/* Display a tab navigation here for news, currency repos, etc */}
-                    <CoinDetailGraphSection
+                    <GraphSectionCoinDetail
                         coinId={coinId}
                         // graphLabels={graphLabels}
                         // graphPoints={graphPoints}

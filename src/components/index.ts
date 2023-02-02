@@ -1,2 +1,3 @@
-export * from './coin-list-components';
-export * from './reusable-components';
+export * from './coin-detail';
+export * from './coin-list';
+export * from './reusables';

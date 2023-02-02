@@ -1,20 +1,20 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, { Dispatch, SetStateAction } from 'react';
 
-import { useTheme } from '../../../theme/ThemeProvider';
+import { useTheme } from '../../../../theme/ThemeProvider';
 
 type Props = {
     amountOfDays: string;
     onPressDays: (apiParam: string) => void | Dispatch<SetStateAction<string>>;
 };
 
-type ItemData = {
+type DaysData = {
     id: string;
     days: string;
     apiParam: string;
 };
 
-const dayOptions: ItemData[] = [
+const dayOptions: DaysData[] = [
     {
         days: '1',
         apiParam: '1',
@@ -57,22 +57,24 @@ const dayOptions: ItemData[] = [
     },
 ];
 
-export const CoinDetailDays: React.FC<Props> = ({
+export const DaysSelector: React.FC<Props> = ({
     amountOfDays,
     onPressDays,
 }) => {
     const { colors } = useTheme();
 
-    const DisplayDayOptions = dayOptions.map((day: ItemData) => {
+    const DisplayDayOptions = dayOptions.map((day: DaysData) => {
         return (
             <TouchableOpacity
                 key={day.id}
-                onPress={() =>onPressDays(day.apiParam)}
+                onPress={() => onPressDays(day.apiParam)}
                 style={[
                     styles.daysItem,
                     {
                         backgroundColor: `${
-                            amountOfDays === day.apiParam ? colors.text : 'transparent'
+                            amountOfDays === day.apiParam
+                                ? colors.text
+                                : 'transparent'
                         }`,
                     },
                 ]}>
@@ -84,7 +86,14 @@ export const CoinDetailDays: React.FC<Props> = ({
     });
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.backgroundDark, borderColor: colors.secondary }]}>
+        <View
+            style={[
+                styles.container,
+                {
+                    backgroundColor: colors.backgroundDark,
+                    borderColor: colors.secondary,
+                },
+            ]}>
             {DisplayDayOptions}
         </View>
     );

@@ -9,10 +9,10 @@ import {
     Button,
 } from 'react-native';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useTheme } from '../../../theme/ThemeProvider';
 
+import { useTheme } from '../../../theme/ThemeProvider';
 import { CoinValidator } from '../../Validators/CoinValidator';
-import { CoinListItem, CoinListHeader } from '../index';
+import { ItemCoinList, HeaderCoinList } from '.';
 
 export const CoinList = () => {
     const { colors } = useTheme();
@@ -87,7 +87,7 @@ export const CoinList = () => {
     );
 
     const renderItem: ListRenderItem<CoinValidator> = ({ item }) => (
-        <CoinListItem key={item.id} item={item} />
+        <ItemCoinList key={item.id} item={item} />
     );
 
     const getCoins = () => {
@@ -111,14 +111,14 @@ export const CoinList = () => {
     }, []);
 
     return (
-        <View style={{height: '100%'}}>
+        <View style={{ height: '100%' }}>
             {coins.length ? (
                 <FlatList
                     data={coinsSorted}
                     renderItem={renderItem}
                     keyExtractor={(item: CoinValidator) => item.id}
                     ListHeaderComponent={
-                        <CoinListHeader
+                        <HeaderCoinList
                             sortBy={sortBy}
                             clickSortOption={clickSortOption}
                             reverseSort={reverseSort}

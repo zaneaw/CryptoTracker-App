@@ -1,4 +1,6 @@
-export const usePriceChangeOptions = (priceChangePercentage: number): [string, boolean] => {
+export const usePriceChangeOptions = (
+    priceChangePercentage: number,
+): [string, boolean] => {
     let priceChangeNegBool: boolean = false;
     let priceChangePercentageFormatted: string;
 
@@ -14,4 +16,4 @@ export const usePriceChangeOptions = (priceChangePercentage: number): [string, b
     priceChangePercentageFormatted = priceChangePercentage.toFixed(2);
 
     return [priceChangePercentageFormatted, priceChangeNegBool];
-}
+};

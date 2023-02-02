@@ -1,15 +1,21 @@
 import { View } from 'react-native';
-import React, { useEffect, useState, useCallback, Dispatch, SetStateAction } from 'react';
+import React, {
+    useEffect,
+    useState,
+    useCallback,
+    Dispatch,
+    SetStateAction,
+} from 'react';
 
-import { CoinDetailGraph } from './CoinDetailGraph';
-import { CoinDetailDays } from './CoinDetailDays';
+import { Graph } from '../reusables/graph-section';
+import { DaysSelector } from '../reusables/graph-section';
 
 type Props = {
     coinId: string;
     priceChange: number;
 };
 
-export const CoinDetailGraphSection: React.FC<Props> = ({
+export const GraphSectionCoinDetail: React.FC<Props> = ({
     coinId,
     priceChange,
 }) => {
@@ -17,19 +23,23 @@ export const CoinDetailGraphSection: React.FC<Props> = ({
     const [graphLabels, setGraphLabels] = useState<string[]>([]);
     const [graphPoints, setGraphPoints] = useState<number[]>([]);
 
-    const onPressDays = useCallback((apiParam: string): void | Dispatch<SetStateAction<string>> => {
-        if (amountOfDays === apiParam) {
-            return;
-        }
+    const onPressDays = useCallback(
+        (apiParam: string): void | Dispatch<SetStateAction<string>> => {
+            if (amountOfDays === apiParam) {
+                return;
+            }
 
-        setAmountOfDays(apiParam);
-    }, []);
+            setAmountOfDays(apiParam);
+        },
+        [],
+    );
 
     const getCoinGraphData = () => {
         fetch(
-            `https://zanes-crypto-tracker-server.cyclic.app/api/get-single-coin-ohlc/${coinId}?` + new URLSearchParams({
-                days: amountOfDays,
-            }),
+            `https://zanes-crypto-tracker-server.cyclic.app/api/get-single-coin-ohlc/${coinId}?` +
+                new URLSearchParams({
+                    days: amountOfDays,
+                }),
         )
             .then(res => res.json())
             .then(json => cleanGraphData(json))
@@ -58,12 +68,19 @@ export const CoinDetailGraphSection: React.FC<Props> = ({
 
     useEffect(() => {
         getCoinGraphData();
-    }, [amountOfDays])
+    }, [amountOfDays]);
 
     return (
-        <View style={{marginVertical: 24}}>
-            <CoinDetailDays amountOfDays={amountOfDays} onPressDays={onPressDays} />
-            <CoinDetailGraph graphLabels={graphLabels} graphPoints={graphPoints} priceChange={priceChange} />
+        <View style={{ marginVertical: 24 }}>
+            <DaysSelector
+                amountOfDays={amountOfDays}
+                onPressDays={onPressDays}
+            />
+            <Graph
+                graphLabels={graphLabels}
+                graphPoints={graphPoints}
+                priceChange={priceChange}
+            />
         </View>
     );
 };

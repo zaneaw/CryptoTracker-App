@@ -9,5 +9,11 @@ export const ToggleTheme: React.FC = () => {
         isDark ? setScheme('light') : setScheme('dark');
     };
 
-    return <Switch style={{marginTop: 'auto'}} value={isDark} onValueChange={toggleScheme} />;
+    return (
+        <Switch
+            style={{ marginTop: 'auto' }}
+            value={isDark}
+            onValueChange={toggleScheme}
+        />
+    );
 };

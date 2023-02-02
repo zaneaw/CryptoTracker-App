@@ -1,15 +1,10 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { View, SafeAreaView, StyleSheet } from 'react-native';
 import React from 'react';
-import { useTheme } from '../../theme/ThemeProvider';
 
-import { RootStackParamList } from '../routes';
+import { useTheme } from '../../theme/ThemeProvider';
 import { CoinList } from '../components';
 
-type HomeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
-
-export const HomeScreen = () => {
+export const CoinListScreen = () => {
     const { colors } = useTheme();
 
     return (

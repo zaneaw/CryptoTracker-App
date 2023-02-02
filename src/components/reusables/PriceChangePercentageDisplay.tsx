@@ -8,8 +8,11 @@ type Props = {
     priceChangeAmount: number;
 };
 
-export const PriceChangePercentageDisplay: React.FC<Props> = ({ priceChangeAmount }) => {
-    const [priceChangePercentage, priceChangeNegBool] = usePriceChangeOptions(priceChangeAmount);
+export const PriceChangePercentageDisplay: React.FC<Props> = ({
+    priceChangeAmount,
+}) => {
+    const [priceChangePercentage, priceChangeNegBool] =
+        usePriceChangeOptions(priceChangeAmount);
 
     return (
         <View
@@ -52,5 +55,5 @@ const styles = StyleSheet.create({
     },
     textSize: {
         fontSize: 16,
-    }
-})
+    },
+});

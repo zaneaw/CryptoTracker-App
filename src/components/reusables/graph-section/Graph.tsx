@@ -1,9 +1,9 @@
 import React from 'react';
-import { Dimensions, View, Text } from 'react-native';
+import { Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-import { usePriceFormatter } from '../../Hooks';
-import { useTheme } from '../../../theme/ThemeProvider';
+import { usePriceFormatter } from '../../../Hooks';
+import { useTheme } from '../../../../theme/ThemeProvider';
 
 type Props = {
     graphLabels: string[];
@@ -11,7 +11,11 @@ type Props = {
     priceChange: number;
 };
 
-export const CoinDetailGraph: React.FC<Props> = ({ graphLabels, graphPoints, priceChange }) => {
+export const Graph: React.FC<Props> = ({
+    graphLabels,
+    graphPoints,
+    priceChange,
+}) => {
     const { colors, isDark } = useTheme();
 
     return (
