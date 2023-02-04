@@ -13,13 +13,15 @@
         "target": "esnext",
         "baseUrl": ".",
         "paths": {
-            "@assets/*": ["src/assets/*"],
-            "@components/*": ["src/components/*"],
-            "@hooks/*": ["src/hooks/*"],
+            "@assets": ["src/assets"],
+            "@components": ["src/components"],
+            "@hooks": ["src/hooks"],
+            "@navigation": ["src/navigation"],
             "@navigation/*": ["src/navigation/*"],
-            "@screens/*": ["src/screens/*"],
+            "@screens": ["src/screens"],
+            "@theme": ["src/theme"],
             "@theme/*": ["src/theme/*"],
-            "@utils/*": ["src/utils/*"],
+            "@utils": ["src/utils"],
             "@validators/*": ["src/validators/*"]
         }
     },

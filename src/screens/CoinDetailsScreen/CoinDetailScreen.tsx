@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { useTheme } from '@theme/index';
+import { useTheme } from '@theme';
 import { RootStackParamList } from '@navigation/routes';
 import { CoinDetailHeader, GraphSection, MarketDataSection } from '.';
 

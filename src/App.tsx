@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { ThemeProvider } from '@theme/index';
-import { CoinListScreen, CoinDetailScreen, SettingsScreen } from '@screens/index';
 import { Stack } from '@navigation/routes';
-import { HeaderRight } from '@components/index';
+import { ThemeProvider } from '@theme';
+import { CoinListScreen, CoinDetailScreen, SettingsScreen } from '@screens';
+import { HeaderRight } from '@components';
 
 export const App = () => {
     return (

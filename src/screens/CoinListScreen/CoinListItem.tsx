@@ -3,11 +3,11 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import { useTheme } from '@theme/index';
-import { priceFormatter, largeNumFormatter } from '@utils/index';
 import { CoinValidator } from '@validators/CoinValidator';
 import { RootStackParamList } from '@navigation/routes';
-import { PriceChangePercentageDisplay } from '@components/index';
+import { useTheme } from '@theme';
+import { priceFormatter, largeNumFormatter } from '@utils';
+import { PriceChangePercentageDisplay } from '@components';
 
 type Props = {
     item: CoinValidator;

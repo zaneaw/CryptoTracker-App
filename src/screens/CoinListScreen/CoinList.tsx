@@ -10,7 +10,7 @@ import {
     Button,
 } from 'react-native';
 
-import { useTheme } from '@theme/index';
+import { useTheme } from '@theme';
 import { CoinValidator } from '@validators/CoinValidator';
 import { CoinListItem, CoinListHeader } from '.';
 

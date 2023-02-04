@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { useTheme } from '@theme/index';
-import { priceFormatter } from '@utils/.';
-import { PriceChangePercentageDisplay } from '@components/.';
+import { useTheme } from '@theme';
+import { priceFormatter } from '@utils';
+import { PriceChangePercentageDisplay } from '@components';
 
 type Props = {
     coinSymbol: string;

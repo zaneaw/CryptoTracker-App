@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 
-import { useTheme } from '@theme/index';
-import { ToggleTheme } from '@components/index';
+import { useTheme } from '@theme/.';
+import { ToggleTheme } from '@components';
 
 export const SettingsScreen: React.FC = () => {
     const { colors } = useTheme();
