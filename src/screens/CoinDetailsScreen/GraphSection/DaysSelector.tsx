@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-import { useTheme } from '@theme/.';
+import { useTheme } from '@theme/index';
 
 type Props = {
     amountOfDays: string;

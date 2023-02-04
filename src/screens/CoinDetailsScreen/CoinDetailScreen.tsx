@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { useTheme } from '@theme/.';
+import { useTheme } from '@theme/index';
 import { RootStackParamList } from '@navigation/routes';
-import { Header, GraphSection, MarketDataSection } from '.';
+import { CoinDetailHeader, GraphSection, MarketDataSection } from '.';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>;
 
@@ -60,7 +60,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                             onRefresh={getCoinData}
                         />
                     }>
-                    <Header
+                    <CoinDetailHeader
                         coinSymbol={coinData.symbol}
                         coinCurrentPrice={
                             coinData.market_data.current_price.usd

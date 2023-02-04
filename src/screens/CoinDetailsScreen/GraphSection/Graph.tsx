@@ -2,8 +2,8 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-import { priceFormatter } from '@utils/.';
-import { useTheme } from '@theme/.';
+import { priceFormatter } from '@utils/index';
+import { useTheme } from '@theme/index';
 
 type Props = {
     graphLabels: string[];

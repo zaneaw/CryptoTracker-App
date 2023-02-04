@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { useTheme } from '@theme/.';
+import { useTheme } from '@theme/index';
 import { priceFormatter } from '@utils/.';
 import { PriceChangePercentageDisplay } from '@components/.';
 
@@ -11,7 +11,7 @@ type Props = {
     coinPriceChange: number;
 };
 
-export const Header: React.FC<Props> = React.memo(
+export const CoinDetailHeader: React.FC<Props> = React.memo(
     ({ coinSymbol, coinCurrentPrice, coinPriceChange }) => {
         const { colors } = useTheme();
         const coinCurrentPriceFormatted = priceFormatter(coinCurrentPrice);

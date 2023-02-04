@@ -1,14 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { ThemeProvider } from '@theme/ThemeProvider';
-import { 
-    CoinListScreen, 
-    // CoinDetailScreen, 
-    // SettingsScreen 
-} from '@screens/.';
+import { ThemeProvider } from '@theme/index';
+import { CoinListScreen, CoinDetailScreen, SettingsScreen } from '@screens/index';
 import { Stack } from '@navigation/routes';
-import { HeaderRight } from '@components/.';
+import { HeaderRight } from '@components/index';
 
 export const App = () => {
     return (
@@ -27,7 +23,7 @@ export const App = () => {
                             headerRight: () => <HeaderRight />,
                         })}
                     />
-                    {/* <Stack.Screen
+                    <Stack.Screen
                         name="CoinDetail"
                         component={CoinDetailScreen}
                         options={({ route, navigation }) => ({
@@ -41,7 +37,7 @@ export const App = () => {
                         options={({ navigation }) => ({
                             title: 'Settings',
                         })}
-                    /> */}
+                    />
                 </Stack.Navigator>
             </NavigationContainer>
         </ThemeProvider>
