@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { RootStackParamList } from '../../routes';
+import { RootStackParamList } from '@navigation/routes';
 
 export const HeaderRight: React.FC = () => {
     const navigation =

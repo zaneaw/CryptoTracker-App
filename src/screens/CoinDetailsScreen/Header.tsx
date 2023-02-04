@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '../../../theme/ThemeProvider';
-import { usePriceFormatter } from '../../Hooks';
 
-import { PriceChangePercentageDisplay } from '../reusables';
+import { useTheme } from '@theme/.';
+import { priceFormatter } from '@utils/.';
+import { PriceChangePercentageDisplay } from '@components/.';
 
 type Props = {
     coinSymbol: string;
@@ -11,10 +11,10 @@ type Props = {
     coinPriceChange: number;
 };
 
-export const HeaderCoinDetail: React.FC<Props> = React.memo(
+export const Header: React.FC<Props> = React.memo(
     ({ coinSymbol, coinCurrentPrice, coinPriceChange }) => {
         const { colors } = useTheme();
-        const coinCurrentPriceFormatted = usePriceFormatter(coinCurrentPrice);
+        const coinCurrentPriceFormatted = priceFormatter(coinCurrentPrice);
 
         return (
             <View style={styles.topInfo}>

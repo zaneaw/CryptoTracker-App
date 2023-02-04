@@ -9,7 +9,18 @@
         "moduleResolution": "node",
         "noEmit": true,
         "strict": true,
-        "target": "esnext"
+        "target": "esnext",
+        "baseUrl": ".",
+        "paths": {
+            "@assets/*": ["src/assets/*"],
+            "@components/*": ["src/components/*"],
+            "@hooks/*": ["src/hooks/*"],
+            "@navigation/*": ["src/navigation/*"],
+            "@screens/*": ["src/screens/*"],
+            "@theme/*": ["src/theme/*"],
+            "@utils/*": ["src/utils/*"],
+            "@validators/*": ["src/validators/*"]
+        }
     },
     "exclude": [
         "node_modules",

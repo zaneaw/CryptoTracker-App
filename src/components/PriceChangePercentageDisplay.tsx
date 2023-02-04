@@ -2,7 +2,8 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { usePriceChangeOptions } from '../../Hooks';
+// import { priceChangeOptions } from '@utils/.';
+import { priceChangeOptions } from '@utils/.';
 
 type Props = {
     priceChangeAmount: number;
@@ -12,7 +13,7 @@ export const PriceChangePercentageDisplay: React.FC<Props> = ({
     priceChangeAmount,
 }) => {
     const [priceChangePercentage, priceChangeNegBool] =
-        usePriceChangeOptions(priceChangeAmount);
+        priceChangeOptions(priceChangeAmount);
 
     return (
         <View

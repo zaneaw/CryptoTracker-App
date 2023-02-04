@@ -4,5 +4,10 @@ module.exports = {
   rules: {
     'prettier/prettier': 0,
   },
-  'parser': '@babel/eslint-parser'
+  'parser': '@babel/eslint-parser',
+  settings: {
+    "import/resolver": {
+      typescript: {} // this loads <rootdir>/tsconfig.json to eslint
+    },
+  }
 };

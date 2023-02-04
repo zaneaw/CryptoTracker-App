@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     View,
@@ -7,15 +8,11 @@ import {
     ActivityIndicator,
     RefreshControl,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { useTheme } from '../../theme/ThemeProvider';
-import { RootStackParamList } from '../routes';
-import {
-    GraphSectionCoinDetail,
-    HeaderCoinDetail,
-} from '../components/coin-detail';
+import { useTheme } from '@theme/.';
+import { RootStackParamList } from '@navigation/routes';
+import { Header, GraphSection, MarketDataSection } from '.';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CoinDetail'>;
 
@@ -63,7 +60,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                             onRefresh={getCoinData}
                         />
                     }>
-                    <HeaderCoinDetail
+                    <Header
                         coinSymbol={coinData.symbol}
                         coinCurrentPrice={
                             coinData.market_data.current_price.usd
@@ -73,7 +70,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                         }
                     />
                     {/* Display a tab navigation here for news, currency repos, etc */}
-                    <GraphSectionCoinDetail
+                    <GraphSection
                         coinId={coinId}
                         // graphLabels={graphLabels}
                         // graphPoints={graphPoints}
@@ -81,6 +78,7 @@ export const CoinDetailScreen: React.FC<Props> = ({ route }) => {
                             coinData.market_data.price_change_percentage_24h
                         }
                     />
+                    <MarketDataSection coinId={coinId} />
                 </ScrollView>
             )}
             {isError ? (

@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
     View,
     Text,
@@ -8,11 +9,10 @@ import {
     StyleSheet,
     Button,
 } from 'react-native';
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
-import { useTheme } from '../../../theme/ThemeProvider';
-import { CoinValidator } from '../../Validators/CoinValidator';
-import { ItemCoinList, HeaderCoinList } from '.';
+import { useTheme } from '@theme/.';
+import { CoinValidator } from 'validators/CoinValidator';
+import { CoinListItem, Header } from '.';
 
 export const CoinList = () => {
     const { colors } = useTheme();
@@ -87,7 +87,7 @@ export const CoinList = () => {
     );
 
     const renderItem: ListRenderItem<CoinValidator> = ({ item }) => (
-        <ItemCoinList key={item.id} item={item} />
+        <CoinListItem key={item.id} item={item} />
     );
 
     const getCoins = () => {
@@ -118,7 +118,7 @@ export const CoinList = () => {
                     renderItem={renderItem}
                     keyExtractor={(item: CoinValidator) => item.id}
                     ListHeaderComponent={
-                        <HeaderCoinList
+                        <Header
                             sortBy={sortBy}
                             clickSortOption={clickSortOption}
                             reverseSort={reverseSort}

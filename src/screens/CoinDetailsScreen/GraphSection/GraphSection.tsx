@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import React, {
     useEffect,
     useState,
@@ -6,16 +5,17 @@ import React, {
     Dispatch,
     SetStateAction,
 } from 'react';
+import { View } from 'react-native';
 
-import { Graph } from '../reusables/graph-section';
-import { DaysSelector } from '../reusables/graph-section';
+import { Graph } from './Graph';
+import { DaysSelector } from './DaysSelector';
 
 type Props = {
     coinId: string;
     priceChange: number;
 };
 
-export const GraphSectionCoinDetail: React.FC<Props> = ({
+export const GraphSection: React.FC<Props> = ({
     coinId,
     priceChange,
 }) => {

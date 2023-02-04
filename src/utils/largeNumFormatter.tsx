@@ -1,4 +1,4 @@
-export const useLargeNumFormatter = (marketCap: number) => {
+export const largeNumFormatter = (marketCap: number) => {
     let formattedNum: string | number;
 
     if (marketCap >= 1000000000000) {

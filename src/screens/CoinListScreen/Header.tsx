@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { useTheme } from '../../../theme/ThemeProvider';
+import { useTheme } from '@theme/.';
 
 type Props = {
     sortBy: string;
@@ -10,7 +10,7 @@ type Props = {
     reverseSort: boolean;
 };
 
-export const HeaderCoinList: React.FC<Props> = React.memo(
+export const Header: React.FC<Props> = React.memo(
     ({ sortBy, clickSortOption, reverseSort }) => {
         const { colors } = useTheme();
 

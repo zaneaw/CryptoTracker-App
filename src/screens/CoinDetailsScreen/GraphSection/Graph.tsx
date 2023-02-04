@@ -2,8 +2,8 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-import { usePriceFormatter } from '../../../Hooks';
-import { useTheme } from '../../../../theme/ThemeProvider';
+import { priceFormatter } from '@utils/.';
+import { useTheme } from '@theme/.';
 
 type Props = {
     graphLabels: string[];
@@ -55,7 +55,7 @@ export const Graph: React.FC<Props> = ({
                     labelColor: () => colors.flipText,
                 }}
                 formatYLabel={(yValue: string) => {
-                    return usePriceFormatter(yValue, true);
+                    return priceFormatter(yValue, true);
                 }}
             />
         </>

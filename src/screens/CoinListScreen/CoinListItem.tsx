@@ -1,30 +1,30 @@
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
 
-import { useTheme } from '../../../theme/ThemeProvider';
-import { usePriceFormatter, useLargeNumFormatter } from '../../Hooks';
-import { CoinValidator } from '../../Validators/CoinValidator';
-import { RootStackParamList } from '../../routes';
-import { PriceChangePercentageDisplay } from '../reusables';
+import { useTheme } from '@theme/.';
+import { priceFormatter, largeNumFormatter } from '@utils/.';
+import { CoinValidator } from 'validators/CoinValidator';
+import { RootStackParamList } from '@navigation/routes';
+import { PriceChangePercentageDisplay } from '@components/.';
 
 type Props = {
     item: CoinValidator;
 };
 
-export const ItemCoinList: React.FC<Props> = React.memo(({ item }) => {
+export const CoinListItem: React.FC<Props> = React.memo(({ item }) => {
     const navigation =
         useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const { colors } = useTheme();
-    const coinCurrentPrice = usePriceFormatter(item.current_price);
+    const coinCurrentPrice = priceFormatter(item.current_price);
 
     // let coinImage: string = item.image.replace('large', 'small');
     let marketCap: string | number = item.market_cap;
     // let currPrice: string | number = item.current_price;
 
     if (marketCap > 0.01) {
-        marketCap = useLargeNumFormatter(marketCap);
+        marketCap = largeNumFormatter(marketCap);
     }
 
     const onPressCoinDetail = () => {

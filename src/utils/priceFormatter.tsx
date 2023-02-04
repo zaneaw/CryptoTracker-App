@@ -1,4 +1,4 @@
-export const usePriceFormatter = (
+export const priceFormatter = (
     currPrice: number | string,
     optionalDecimals?: boolean,
 ): string => {

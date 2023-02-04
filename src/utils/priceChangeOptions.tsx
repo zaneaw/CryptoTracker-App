@@ -1,4 +1,4 @@
-export const usePriceChangeOptions = (
+export const priceChangeOptions = (
     priceChangePercentage: number,
 ): [string, boolean] => {
     let priceChangeNegBool: boolean = false;

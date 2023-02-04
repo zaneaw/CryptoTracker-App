@@ -1,4 +1,5 @@
 # App Goals #
+RUN `pod install` in ios directory next time 
 
 ### **_TODOs:_**
 * handler for 0% price change!
@@ -17,34 +18,6 @@
 * Page to search crypto's based on other info?
 * Notifications button?
   * Once accounts are created, give the ability to favorite cryptos and place them at the top of home page?
-
-
-## **_Naming Conventions & Folder Structure:_**
-**Case Sensitive instructions!**  
-**Bold letters are strict policies, must be followed.**  
-**Italic letters are the custom portion of the naming.**
-
-### **_src_**
-* components 
-  * screen-name - _*coin-detail (folder) = CoinDetailScreen.tsx_
-    * _components unique to the structure and design of the page_
-    * _*Header.tsx_
-    * index.ts
-  * reusables - _used in several portions of screens_
-    * _unique, descriptive names_
-    * _*HeaderRight.tsx_
-    * index.ts
-  * index.ts
-* Hooks - _used across components mostly_
-  * **use**_NameOfHook_**.tsx**
-  * index.ts
-* screens - _used for main navigation in App_
-  * _Name_**Screen.tsx**
-  * index.ts
-* Validators - _used for exporting TypeScript Types_
-  * _Name_**Validator.ts**
-* **App.tsx** - _main_
-* routes.tsx - _react native stack navigator here_
 
 
 ### **_Build Styling Notes:_**
