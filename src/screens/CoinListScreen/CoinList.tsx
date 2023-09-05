@@ -33,9 +33,7 @@ export const CoinList = () => {
     };
 
     const coinsSorted = useMemo((): null | CoinValidator[] => {
-        if (!coins.length) {
-            return null;
-        }
+        if (!coins.length) return null;
 
         return coins.sort((a: CoinValidator, b: CoinValidator) => {
             let aNum!: number;
